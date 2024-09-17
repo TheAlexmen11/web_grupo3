@@ -1,14 +1,45 @@
+<%@page import="java.util.List"%>
+<%@page import="web_grupo3.Usuario"%>
+<%@page import="web_grupo3.DaoUsuario"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
     
  <%
-                // Proceso de autenticación
-                String nom_user = request.getParameter("nom_user");
-                String username = request.getParameter("username");
-                String password = request.getParameter("password");
-                String role_user = request.getParameter("role_user");
-                System.out.println(username);
+				DaoUsuario dao = new DaoUsuario();
+ 				List<Usuario> lst = dao.consultarTodos();   
+				 // Proceso de autenticación
+                               
+                Usuario u = new Usuario();
+                
+               	u.setNom_user(request.getParameter("nom_user"));
+               	u.setUsername(request.getParameter("username"));
+               	u.setPassword_hash(request.getParameter("password"));
+               	u.setRol_user(request.getParameter("role_user"));
+                                
+                if(request.getParameter("nom_user")!=null){
+                	dao.registrarTodos(u);
+                	response.sendRedirect("dash_usuario.jsp");
+                }
+            
+                
+                String idToDelete = request.getParameter("idToDelete");
+                if (idToDelete != null && !idToDelete.isEmpty()) {
+                    try {
+                        int userId = Integer.parseInt(idToDelete);
+                        
+                        dao.eliminarUsuario(userId);
+                        // Redirige a la misma página para reflejar los cambios
+                        response.sendRedirect("dash_usuario.jsp");
+                        return;
+                    } catch (NumberFormatException e) {
+                        // Maneja el caso en que el id no es válido
+                        e.printStackTrace();
+                    }
+                }
+                
+                
+                
                 
                 
                 
@@ -305,6 +336,55 @@
                                           </div>
                                     </div>
                                 </div>
+                                
+                                
+                                                                
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                              <div id="message"></div>
+                                              <form id="user-form"   action="dash_usuario.jsp"  method="POST">
+                                                <div class="mb-2">
+                                                  <label for="recipient-name" class="col-form-label">Nombre Completo:</label>
+                                                  <input type="text" class="form-control" id="nom_user" name="nom_user">
+                                                </div>
+                                                <div class="mb-2">
+                                                  <label for="recipient-name" class="col-form-label">Username:</label>
+                                                  <input type="text" class="form-control" id="username" name="username">
+                                                </div>
+                                                <div class="mb-2">
+                                                  <label for="recipient-name" class="col-form-label">Contraseña:</label>
+                                                  <input type="password" class="form-control" id="password" name="password">
+                                                </div>
+                                                <div class="mb-2" id="roles">
+                                                  <label class="col-form-label">Rol</label>
+                                                  <select class="form-select" name="role_user" id="role_user">
+                                                    <option value="" selected="">Seleccionar Rol</option>
+                                                    
+                                                    <option value="Administrador">Administrador</option>
+                                                    <option value="Tecnico">Tecnico</option>
+                                                    
+                                                  </select>
+                                                </div>
+
+                                                <input type="hidden" id="user_id" name="user_id">
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                                                  </div>
+                                              </form>
+                                            </div>
+
+                                          </div>
+                                    </div>
+                                </div>
+                                
                         </div>
 
                         <div class="card-body">
@@ -314,55 +394,41 @@
                                     <thead>
                                         <tr>
                                             <th>Nombre</th>
-                                            <th>Correo</th>
+                                            <th>Username</th>
                                             <th>Rol</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                      
+                    <% for(int i=0;i<lst.size();i++){ %>
                                         <tr>
-                                            <td>Mario Pablo</td>
-                                            <td>mario@gmail.com</td>
-                                            <td>Admin</td>
+                                            <td><%=lst.get(i).getNom_user()%></td>
+                                            <td><%=lst.get(i).getUsername()%></td>
+                                            <td><%=lst.get(i).getRol_user()%></td>
 
 
                                             <td>
-                                                <a href="#" class="btn btn-info btn-icon-split">
+                                                <a href="#" class="btn btn-info btn-icon-split" data-bs-toggle="modal" data-bs-target="#exampleModal1">
                                                     <span class="icon text-white">
                                                         <i class="fas fa-info-circle"></i>  
                                                     </span>
                                                     <span class="text">Editar</span>
                                                 </a>
-                                                <a href="#" class="btn btn-danger btn-icon-split">
-                                                    <span class="icon text-white">
-                                                        <i class="fas fa-trash"></i>  
-                                                    </span>
-                                                    <span class="text">Eliminar</span>
-                                                </a>
+<form action="dash_usuario.jsp" method="post" style="display:inline;">
+                    <input type="hidden" name="idToDelete" value="<%= lst.get(i).getId_user() %>"/>
+                    <button type="submit" class="btn btn-danger btn-icon-split">
+                        <span class="icon text-white">
+                            <i class="fas fa-trash"></i>
+                        </span>
+                        <span class="text">Eliminar</span>
+                    </button>
+                    </form>
 
                                             </td>
                                         </tr>
+    				<%  } %>
 
-                                        <tr>
-                                            <td>Alex Michael</td>
-                                            <td>alexcancho@gmail.com</td>
-                                            <td>admin</td>
-                                            <td>
-                                                <a href="#" class="btn btn-info btn-icon-split">
-                                                    <span class="icon text-white">
-                                                        <i class="fas fa-info-circle"></i>  
-                                                    </span>
-                                                    <span class="text">Editar</span>
-                                                </a>
-                                                <a href="#" class="btn btn-danger btn-icon-split">
-                                                    <span class="icon text-white">
-                                                        <i class="fas fa-trash"></i>  
-                                                    </span>
-                                                    <span class="text">Eliminar</span>
-                                                </a>
-                                            </td>
-                                        </tr>
+
                                     </tbody>
                                 </table>
                             </div>
