@@ -132,7 +132,9 @@
 
 
             <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
+            <div class="sidebar-divider d-none d-md-block">
+    <hr>
+</div>
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">

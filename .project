@@ -3,6 +3,7 @@
 	<name>web_grupo3</name>
 	<comment></comment>
 	<projects>
+		<project>web_grupo3jpa</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

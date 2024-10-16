@@ -84,5 +84,32 @@ public class DaoUsuario extends conexion {
 		
 	}
 	
+	public  List<Usuario> consultarUsuario(int userId) throws NamingException, SQLException {
+		List<Usuario> lst = new ArrayList<Usuario>();
+		Connection cnx = conexion.getConexion();
+		System.out.println(userId);
+		String sql = "SELECT * FROM usuarios WHERE id = ?";
+		try {
+		PreparedStatement st = cnx.prepareStatement(sql);
+		st.setInt(1, userId);
+		ResultSet rs = st.executeQuery();
+		while (rs.next()) {
+			Usuario u = new Usuario();
+			u.setId_user(rs.getInt(1));
+			u.setNom_user(rs.getString(2));
+			u.setUsername(rs.getString(3));
+			u.setPassword_hash(rs.getString(4));
+			u.setRol_user(rs.getString(5));
+			lst.add(u);
+		}
+		cnx.close();
+		cnx.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return lst;
+		
+	}
 	
 }

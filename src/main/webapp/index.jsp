@@ -133,7 +133,9 @@
                                 <img class="card-img-top" src="./img/<%=lst.get(i).getImg_product()%>.png" alt="..." />
                                 <div class="card-body p-4">
                                     <div class="badge bg-primary bg-gradient rounded-pill mb-2">Nuevo</div>
-                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3"><%=lst.get(i).getDescripcion_product()%></h5></a>
+                                    <a class="text-decoration-none link-dark stretched-link fs-4 fw-bold" href="#!">
+                                    <%=lst.get(i).getDescripcion_product()%> 
+                                    </a>
                                 </div>
                                 <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
                                     <div class="d-flex align-items-end justify-content-between">

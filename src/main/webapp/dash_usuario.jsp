@@ -408,12 +408,16 @@
 
 
                                             <td>
-                                                <a href="#" class="btn btn-info btn-icon-split" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-                                                    <span class="icon text-white">
-                                                        <i class="fas fa-info-circle"></i>  
-                                                    </span>
-                                                    <span class="text">Editar</span>
-                                                </a>
+                                            
+<button type="button" class="btn btn-info btn-icon-split" onclick="fetchUserData(<%= lst.get(i).getId_user() %>)">
+    <span class="icon text-white">
+        <i class="fas fa-info-circle"></i>
+    </span>
+    <span class="text">Editar</span>
+</button>
+
+
+                                                
 <form action="dash_usuario.jsp" method="post" style="display:inline;">
                     <input type="hidden" name="idToDelete" value="<%= lst.get(i).getId_user() %>"/>
                     <button type="submit" class="btn btn-danger btn-icon-split">
@@ -500,6 +504,32 @@
     <!-- Page level plugins -->
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script>
+  function fetchUserData(userId) {
+	    console.log("Función llamada con el ID de usuario: " + userId);
+    // Usamos AJAX para hacer una solicitud GET al servidor
+    $.ajax({
+      url: 'getUserData',  // Aquí va el Servlet o JSP que manejará la consulta
+      type: 'GET',
+      data: { id: userId },  // Pasamos la ID del usuario al servidor
+      success: function(data) {
+        // Llenamos los campos del formulario con los datos que llegan del servidor
+        document.getElementById("userId").value = data.id;
+        document.getElementById("nombre").value = data.nombre;
+        document.getElementById("email").value = data.email;
+
+        // Mostramos el modal
+        var myModal = new bootstrap.Modal(document.getElementById('exampleModal1'), {});
+        myModal.show();
+      },
+      error: function(err) {
+       console.log("Error al obtener los datos del usuario", err);
+     }
+    });
+  }
+</script>
+
+
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
