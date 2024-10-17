@@ -1,5 +1,18 @@
+
+<%@page import="web_grupo3jpa.Cliente"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="jakarta.tags.core"%>      
+
+<%
+    if (request.getAttribute("clientes") == null) {
+        response.sendRedirect("ServletClienteConsultar");
+    } else {
+        List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
+        }
+%> 
+      
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,7 +47,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.jsp">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -59,7 +72,6 @@
                 Interface
             </div>
 
-
             <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="dash_usuario.jsp">
@@ -82,6 +94,7 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>Productos</span></a>
             </li>
+
 
 
             <!-- Divider -->
@@ -239,7 +252,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-sm-flex  justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">Lista de Clientes</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Lista de Usuarios</h6>
 
                             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm " data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                                 class="fas fa-download fa-sm text-white-50"></i>  Nuevo Usuario</a>
@@ -255,83 +268,136 @@
                                             </div>
                                             <div class="modal-body">
                                               <div id="message"></div>
-                                              <form id="user-form">
+                                              <form id="user-form"   action="ServletClienteRegistro"  method="POST">
+                                              <div class="mb-2">
+                                                  <label for="recipient-name" class="col-form-label">ID:</label>
+                                                  <input type="text" class="form-control" id="id_cliente" name="id_cliente">
+                                                </div>
+                                              
                                                 <div class="mb-2">
                                                   <label for="recipient-name" class="col-form-label">Nombre Completo:</label>
-                                                  <input type="text" class="form-control" id="full_name" name="full_name">
+                                                  <input type="text" class="form-control" id="nom_cliente" name="nom_cliente">
                                                 </div>
+                                                
                                                 <div class="mb-2">
-                                                  <label for="recipient-name" class="col-form-label">Correo electronico:</label>
-                                                  <input type="email" class="form-control" id="email" name="email">
+                                                  <label for="recipient-name" class="col-form-label">dni:</label>
+                                                  <input type="text" class="form-control" id="dni_cliente" name="dni_cliente">
                                                 </div>
-                                                <div class="mb-2">
-                                                  <label for="recipient-name" class="col-form-label">Contraseña:</label>
-                                                  <input type="password" class="form-control" id="password" name="password">
+                                                 <div class="mb-2">
+                                                  <label for="recipient-name" class="col-form-label">email:</label>
+                                                  <input type="text" class="form-control" id="email_cliente" name="email_cliente">
                                                 </div>
-                                                <div class="mb-2" id="roles">
-                                                  <label class="col-form-label">Rol</label>
-                                                  <select class="form-select" name="role_id" id="role_id">
-                                                    <option value="" selected="">Seleccionar Rol</option>
-                                                    
-                                                    <option value="1">Admin</option>
-                                                    <option value="2">User</option>
-                                                    
-                                                  </select>
+                                                 <div class="mb-2">
+                                                  <label for="recipient-name" class="col-form-label">telefono:</label>
+                                                  <input type="text" class="form-control" id="telefono_cliente" name="telefono_cliente">
                                                 </div>
+                                               
+
+                                                <input type="hidden" id="user_id" name="user_id">
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                                    <button type="button" onclick="alert('deshabilitado para la demo');" class="btn btn-primary">Guardar</button>
+                                                    <button type="submit" class="btn btn-primary">Guardar</button>
                                                   </div>
-                                                <input type="hidden" id="user_id" name="user_id">
                                               </form>
                                             </div>
 
                                           </div>
                                     </div>
                                 </div>
+                                
+                                
+                                                                
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                              <div id="message"></div>
+                                              <form id="user-form"   action="ServletUsuarioActualizar"  method="POST">
+                                                <div class="mb-2">
+                                                  <label for="recipient-name" class="col-form-label">Nombre Completo:</label>
+                                                  <input type="text" class="form-control" id="nom_user1" name="nom_user1">
+                                                </div>
+                                                <div class="mb-2">
+                                                  <label for="recipient-name" class="col-form-label">Username:</label>
+                                                  <input type="text" class="form-control" id="username1" name="username1">
+                                                </div>
+                                                <div class="mb-2">
+                                                  <label for="recipient-name" class="col-form-label">Contraseña:</label>
+                                                  <input type="password" class="form-control" id="password1" name="password1">
+                                                </div>
+                                                <div class="mb-2" id="roles">
+                                                  <label class="col-form-label">Rol</label>
+                                                  <select class="form-select" name="role_user1" id="role_user1">
+                                                    <option value="" selected="">Seleccionar Rol</option>
+                                                    
+                                                    <option value="Administrador">Administrador</option>
+                                                    <option value="Tecnico">Tecnico</option>
+                                                    
+                                                  </select>
+                                                </div>
+
+                                                <input type="hidden" id="user_id1" name="user_id1" value="">
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                                                  </div>
+                                              </form>
+                                            </div>
+
+                                          </div>
+                                    </div>
+                                </div>
+                                
                         </div>
 
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Nombre</th>
-                                            <th>Dni</th>
-                                            <th>Email</th>
-                                            <th>Telefono</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
+                               <table class="table table-bordered" id="dataTableClientes" width="100%" cellspacing="0">
 
-                                    <tbody>
-                                      
-                                        <tr>
-                                            <td>Mario Pablo</td>
-                                            <td>76545335</td>
-                                            <td>mario@gmail.com</td>
-                                            <td>912662516</td>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>DNI</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach items="${clientes}" var="c">
+            <tr>
+                <td><c:out value="${c.nomCliente}"/></td>
+                <td><c:out value="${c.dniCliente}"/></td>
+                <td><c:out value="${c.emailCliente}"/></td>
+                <td><c:out value="${c.telefonoCliente}"/></td>
 
-                                            <td>
-                                                <a href="#" class="btn btn-info btn-icon-split">
-                                                    <span class="icon text-white">
-                                                        <i class="fas fa-info-circle"></i>  
-                                                    </span>
-                                                    <span class="text">Editar</span>
-                                                </a>
-                                                <a href="#" class="btn btn-danger btn-icon-split">
-                                                    <span class="icon text-white">
-                                                        <i class="fas fa-trash"></i>  
-                                                    </span>
-                                                    <span class="text">Eliminar</span>
-                                                </a>
+                <td>
+                    <button type="button" class="btn btn-info btn-icon-split" onclick="fetchClientData(${c.idCliente})">
+                        <span class="icon text-white">
+                            <i class="fas fa-info-circle"></i>
+                        </span>
+                        <span class="text">Editar</span>
+                    </button>
 
-                                            </td>
-                                        </tr>
-
-                                        
-                                    </tbody>
-                                </table>
+                    <form action="ServletClienteEliminar" method="post" style="display:inline;">
+                        <input type="hidden" name="idToDelete" value="${c.idCliente}"/>
+                        <button type="submit" class="btn btn-danger btn-icon-split">
+                            <span class="icon text-white">
+                                <i class="fas fa-trash"></i>
+                            </span>
+                            <span class="text">Eliminar</span>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        </c:forEach>
+    </tbody>
+</table>
                             </div>
                         </div>
                     </div>
@@ -402,8 +468,43 @@
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
+
+
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    
+
+   <script>
+  function fetchClientData(clientId) {
+    console.log("Función llamada con el ID del cliente: " + clientId);
+    // Usamos AJAX para hacer una solicitud GET al servidor
+    $.ajax({
+      url: 'ServletClienteConsultarId',  // Aquí va el Servlet o JSP que manejará la consulta del cliente
+      type: 'GET',
+      data: { id: clientId },  // Pasamos la ID del cliente al servidor
+      success: function(data) {
+        var clientData = data.split(",");  // Suponiendo que los datos vienen en formato separado por comas
+        $('#id_cliente').val(clientData[0]);  // Asignamos el valor al campo id_cliente
+        $('#nom_cliente').val(clientData[1]);  // Asignamos el valor al campo nom_cliente
+        $('#dni_cliente').val(clientData[2]);  // Asignamos el valor al campo dni_cliente
+        $('#email_cliente').val(clientData[3]);  // Asignamos el valor al campo email_cliente
+        $('#telefono_cliente').val(clientData[4]);  // Asignamos el valor al campo telefono_cliente
+        console.log(data);
+
+        // Mostramos el modal
+        var myModal = new bootstrap.Modal(document.getElementById('exampleModalCliente'), {});  // Abre el modal de cliente
+        myModal.show();
+      },
+      error: function(err) {
+        console.log("Error al obtener los datos del cliente", err);
+      }
+    });
+  }
+</script>
+        <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+    
+    
 
 </body>
 
