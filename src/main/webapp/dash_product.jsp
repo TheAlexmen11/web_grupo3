@@ -182,7 +182,7 @@
                             <h6 class="m-0 font-weight-bold text-primary">Lista de Productos</h6>
 
                             <!-- Botón para Nuevo Producto -->
-				    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm " data-bs-toggle="modal" data-bs-target="#exampleModal">
+				    <a  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm " data-bs-toggle="modal" data-bs-target="#exampleModal">
 				        <i class="fas fa-download fa-sm text-white-50"></i> Nuevo Producto
 				    </a>
 				
