@@ -10,9 +10,6 @@ import jakarta.persistence.TypedQuery;
 import web_grupo3jpa.Usuario;
 
 
-/**
- * Session Bean implementation class EjbGestionUsuario
- */
 @Stateless
 @LocalBean
 public class EjbGestionUsuario {

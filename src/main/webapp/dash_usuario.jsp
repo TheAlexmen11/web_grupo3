@@ -368,16 +368,13 @@
                                     </thead>
                                     <tbody>
                                     
-                                    <c:if test="${empty usuarios}">
-    <p>No hay usuarios disponibles para mostrar.</p>
-</c:if>
-                                    
-<c:forEach items="${usuarios}" var="u">
-                                        <tr>
-
-<td><c:out value="${u.nomUser}"/></td>
-<td><c:out value="${u.username}"/></td>
-<td><c:out value="${u.rolUser}"/></td>
+											                                  
+												<c:forEach items="${usuarios}" var="u">
+												                                        <tr>
+												
+												<td><c:out value="${u.nomUser}"/></td>
+												<td><c:out value="${u.username}"/></td>
+												<td><c:out value="${u.rolUser}"/></td>
 
                                             <td>
                                             
@@ -482,8 +479,7 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     
-    
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     
     <script>
   function fetchUserData(userId) {
@@ -512,6 +508,8 @@
     });
   }
 </script>
+        <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
     
     
 
