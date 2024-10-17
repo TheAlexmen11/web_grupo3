@@ -293,45 +293,7 @@
             </div>
         </div>
 
-		
 
-                <!-- Modal Editar Producto -->
-                <div class="modal fade" id="modalEditarProducto" tabindex="-1" aria-labelledby="modalEditarProductoLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalEditarProductoLabel">Editar Producto</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="ServletProductoActualizar" method="POST">
-                                    <div class="mb-2">
-                                        <label for="tipo_product_edit" class="col-form-label">Tipo:</label>
-                                        <input type="text" class="form-control" id="tipo_product_edit" name="tipo_product_edit">
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="marca_product_edit" class="col-form-label">Marca:</label>
-                                        <input type="text" class="form-control" id="marca_product_edit" name="marca_product_edit">
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="descripcion_product_edit" class="col-form-label">Descripción:</label>
-                                        <textarea class="form-control" id="descripcion_product_edit" name="descripcion_product_edit"></textarea>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="precio_product_edit" class="col-form-label">Precio:</label>
-                                        <input type="text" class="form-control" id="precio_product_edit" name="precio_product_edit">
-                                    </div>
-                                    <input type="hidden" id="id_product_edit" name="id_product_edit">
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                        <button type="submit" class="btn btn-primary">Actualizar</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-		
 		<!-- Modal Editar Producto -->
 		<div class="modal fade" id="modalEditarProducto" tabindex="-1" aria-labelledby="modalEditarProductoLabel" aria-hidden="true">
 		    <div class="modal-dialog">
@@ -380,80 +342,69 @@
 		<script src="js/sb-admin-2.min.js"></script>
 		
 		<script>
-		<script>
-		
 			$(document).ready(function() {
-			    // Manejar el envío del formulario
-			    $('#producto-form').on('submit', function(event) {
-			        event.preventDefault(); // Evitar el envío por defecto del formulario
-	
+			    // Función para agregar un producto
+			    $('#save-product').on('click', function() {
 			        $.ajax({
 			            type: 'POST',
-			            url: 'ServletProductoAgregar', // Cambia esto a la URL de tu servlet
-			            data: $(this).serialize(),
+			            url: 'ServletProductoAgregar',
+			            data: $('#producto-form').serialize(),
 			            success: function(response) {
-			                $('#message').html('<div class="alert alert-success">Producto agregado exitosamente.</div>');
-			                $('#producto-form')[0].reset(); // Limpiar el formulario
-			                setTimeout(function() {
-			                    $('#exampleModal').modal('hide'); // Ocultar el modal después de agregar
-			                    location.reload(); // Recargar la página para mostrar el nuevo producto
-			                }, 2000);
+			                location.reload();
 			            },
 			            error: function(xhr, status, error) {
 			                $('#message').html('<div class="alert alert-danger">Error al agregar producto.</div>');
 			            }
 			        });
 			    });
+			
+			    // Función para editar un producto
+			    $(document).on('click', '.btn-warning', function() {
+			        const row = $(this).closest('tr');
+			        $('#tipo_product_edit').val(row.find('td:nth-child(2)').text());
+			        $('#marca_product_edit').val(row.find('td:nth-child(3)').text());
+			        $('#descripcion_product_edit').val(row.find('td:nth-child(4)').text());
+			        $('#img_product_edit').val(row.find('td:nth-child(5) img').attr('src'));
+			        $('#precio_product_edit').val(row.find('td:nth-child(6)').text());
+			        $('#id_product_edit').val(row.find('td:nth-child(1)').text());
+			        $('#modalEditarProducto').modal('show');
+			    });
+			
+			    // Función para actualizar un producto
+			    $('#modalEditarProducto form').on('submit', function(e) {
+			        e.preventDefault(); // Evita el envío del formulario de forma tradicional
+			        $.ajax({
+			            type: 'POST',
+			            url: 'ServletProductoActualizar',
+			            data: $(this).serialize(),
+			            success: function(response) {
+			                location.reload();
+			            },
+			            error: function(xhr, status, error) {
+			                alert('Error al actualizar el producto.');
+			            }
+			        });
+			    });
+			
+			    // Función para eliminar un producto
+			    $(document).on('click', '.btn-danger', function() {
+			        if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
+			            const id = $(this).closest('tr').find('td:nth-child(1)').text();
+			            $.ajax({
+			                type: 'POST',
+			                url: 'ServletProductoEliminar',
+			                data: { id_product: id },
+			                success: function(response) {
+			                    location.reload();
+			                },
+			                error: function(xhr, status, error) {
+			                    alert('Error al eliminar el producto.');
+			                }
+			            });
+			        }
+			    });
 			});
-		
-		
-		    // Función para editar un producto
-		    $(document).on('click', '.btn-warning', function() {
-		        const row = $(this).closest('tr');
-		        $('#tipo_product_edit').val(row.find('td:nth-child(2)').text());
-		        $('#marca_product_edit').val(row.find('td:nth-child(3)').text());
-		        $('#descripcion_product_edit').val(row.find('td:nth-child(4)').text());
-		        $('#img_product_edit').val(row.find('td:nth-child(5) img').attr('src'));
-		        $('#precio_product_edit').val(row.find('td:nth-child(6)').text());
-		        $('#id_product_edit').val(row.find('td:nth-child(1)').text());
-		        $('#modalEditarProducto').modal('show');
-		    });
-		
-		    // Función para actualizar un producto
-		    $('#modalEditarProducto form').on('submit', function(e) {
-		        e.preventDefault(); // Evita el envío del formulario de forma tradicional
-		        $.ajax({
-		            type: 'POST',
-		            url: 'ServletProductoActualizar',
-		            data: $(this).serialize(),
-		            success: function(response) {
-		                location.reload();
-		            },
-		            error: function(xhr, status, error) {
-		                alert('Error al actualizar el producto.');
-		            }
-		        });
-		    });
-		
-		    // Función para eliminar un producto
-		    $(document).on('click', '.btn-danger', function() {
-		        if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
-		            const id = $(this).closest('tr').find('td:nth-child(1)').text();
-		            $.ajax({
-		                type: 'POST',
-		                url: 'ServletProductoEliminar',
-		                data: { id_product: id },
-		                success: function(response) {
-		                    location.reload();
-		                },
-		                error: function(xhr, status, error) {
-		                    alert('Error al eliminar el producto.');
-		                }
-		            });
-		        }
-		    });
-		});
-		</script>
+			</script>
 
     </div>
     <!-- End of Wrapper -->
