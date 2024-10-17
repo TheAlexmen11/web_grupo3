@@ -115,7 +115,7 @@
                 <div id="collapseService" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Servicios:</h6>
-                        <a class="collapse-item" href="tables.html">Servicios</a>
+                        <a class="collapse-item" href="dash_servicio.jsp">Servicios</a>
                         <a class="collapse-item" href="tables.html">Equipos</a>
                     </div>
                 </div>
