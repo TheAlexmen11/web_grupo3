@@ -1,51 +1,18 @@
+
+<%@page import="web_grupo3jpa.Usuario"%>
 <%@page import="java.util.List"%>
-<%@page import="web_grupo3.Usuario"%>
-<%@page import="web_grupo3.DaoUsuario"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-    
- <%
-				DaoUsuario dao = new DaoUsuario();
- 				List<Usuario> lst = dao.consultarTodos();   
-				 // Proceso de autenticación
-                               
-                Usuario u = new Usuario();
-                
-               	u.setNom_user(request.getParameter("nom_user"));
-               	u.setUsername(request.getParameter("username"));
-               	u.setPassword_hash(request.getParameter("password"));
-               	u.setRol_user(request.getParameter("role_user"));
-                                
-                if(request.getParameter("nom_user")!=null){
-                	dao.registrarTodos(u);
-                	response.sendRedirect("dash_usuario.jsp");
-                }
-            
-                
-                String idToDelete = request.getParameter("idToDelete");
-                if (idToDelete != null && !idToDelete.isEmpty()) {
-                    try {
-                        int userId = Integer.parseInt(idToDelete);
-                        
-                        dao.eliminarUsuario(userId);
-                        // Redirige a la misma página para reflejar los cambios
-                        response.sendRedirect("dash_usuario.jsp");
-                        return;
-                    } catch (NumberFormatException e) {
-                        // Maneja el caso en que el id no es válido
-                        e.printStackTrace();
-                    }
-                }
-                
-                
-                
-                
-                
-                
-%>   
-    
-        
+<%@taglib prefix="c" uri="jakarta.tags.core"%>      
+
+<%
+    if (request.getAttribute("usuarios") == null) {
+        response.sendRedirect("ServletUsuarioConsultar");
+    } else {
+        List<Usuario> usuarios = (List<Usuario>) request.getAttribute("usuarios");
+        }
+%> 
+      
 <!DOCTYPE html>
 <html lang="en">
 
@@ -301,7 +268,7 @@
                                             </div>
                                             <div class="modal-body">
                                               <div id="message"></div>
-                                              <form id="user-form"   action="dash_usuario.jsp"  method="POST">
+                                              <form id="user-form"   action="ServletUsuarioRegistro"  method="POST">
                                                 <div class="mb-2">
                                                   <label for="recipient-name" class="col-form-label">Nombre Completo:</label>
                                                   <input type="text" class="form-control" id="nom_user" name="nom_user">
@@ -349,22 +316,22 @@
                                             </div>
                                             <div class="modal-body">
                                               <div id="message"></div>
-                                              <form id="user-form"   action="dash_usuario.jsp"  method="POST">
+                                              <form id="user-form"   action="ServletUsuarioActualizar"  method="POST">
                                                 <div class="mb-2">
                                                   <label for="recipient-name" class="col-form-label">Nombre Completo:</label>
-                                                  <input type="text" class="form-control" id="nom_user" name="nom_user">
+                                                  <input type="text" class="form-control" id="nom_user1" name="nom_user1">
                                                 </div>
                                                 <div class="mb-2">
                                                   <label for="recipient-name" class="col-form-label">Username:</label>
-                                                  <input type="text" class="form-control" id="username" name="username">
+                                                  <input type="text" class="form-control" id="username1" name="username1">
                                                 </div>
                                                 <div class="mb-2">
                                                   <label for="recipient-name" class="col-form-label">Contraseña:</label>
-                                                  <input type="password" class="form-control" id="password" name="password">
+                                                  <input type="password" class="form-control" id="password1" name="password1">
                                                 </div>
                                                 <div class="mb-2" id="roles">
                                                   <label class="col-form-label">Rol</label>
-                                                  <select class="form-select" name="role_user" id="role_user">
+                                                  <select class="form-select" name="role_user1" id="role_user1">
                                                     <option value="" selected="">Seleccionar Rol</option>
                                                     
                                                     <option value="Administrador">Administrador</option>
@@ -373,7 +340,7 @@
                                                   </select>
                                                 </div>
 
-                                                <input type="hidden" id="user_id" name="user_id">
+                                                <input type="hidden" id="user_id1" name="user_id1" value="">
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                                     <button type="submit" class="btn btn-primary">Actualizar</button>
@@ -400,16 +367,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                    <% for(int i=0;i<lst.size();i++){ %>
+                                    
+                                    <c:if test="${empty usuarios}">
+    <p>No hay usuarios disponibles para mostrar.</p>
+</c:if>
+                                    
+<c:forEach items="${usuarios}" var="u">
                                         <tr>
-                                            <td><%=lst.get(i).getNom_user()%></td>
-                                            <td><%=lst.get(i).getUsername()%></td>
-                                            <td><%=lst.get(i).getRol_user()%></td>
 
+<td><c:out value="${u.nomUser}"/></td>
+<td><c:out value="${u.username}"/></td>
+<td><c:out value="${u.rolUser}"/></td>
 
                                             <td>
                                             
-<button type="button" class="btn btn-info btn-icon-split" onclick="fetchUserData(<%= lst.get(i).getId_user() %>)">
+<button type="button" class="btn btn-info btn-icon-split" onclick="fetchUserData(${u.idUser})">
     <span class="icon text-white">
         <i class="fas fa-info-circle"></i>
     </span>
@@ -418,8 +390,8 @@
 
 
                                                 
-<form action="dash_usuario.jsp" method="post" style="display:inline;">
-                    <input type="hidden" name="idToDelete" value="<%= lst.get(i).getId_user() %>"/>
+<form action="ServletUsuarioEliminar" method="post" style="display:inline;">
+                    <input type="hidden" name="idToDelete" value="${u.idUser}"/>
                     <button type="submit" class="btn btn-danger btn-icon-split">
                         <span class="icon text-white">
                             <i class="fas fa-trash"></i>
@@ -430,7 +402,7 @@
 
                                             </td>
                                         </tr>
-    				<%  } %>
+</c:forEach>
 
 
                                     </tbody>
@@ -504,21 +476,33 @@
     <!-- Page level plugins -->
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-<script>
+
+
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+    
+    
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <script>
   function fetchUserData(userId) {
 	    console.log("Función llamada con el ID de usuario: " + userId);
     // Usamos AJAX para hacer una solicitud GET al servidor
     $.ajax({
-      url: 'getUserData',  // Aquí va el Servlet o JSP que manejará la consulta
+      url: 'ServletUsuarioConsultarId',  // Aquí va el Servlet o JSP que manejará la consulta
       type: 'GET',
       data: { id: userId },  // Pasamos la ID del usuario al servidor
       success: function(data) {
-        // Llenamos los campos del formulario con los datos que llegan del servidor
-        document.getElementById("userId").value = data.id;
-        document.getElementById("nombre").value = data.nombre;
-        document.getElementById("email").value = data.email;
-
+    	  var userData = data.split(",");
+    	  $('#user_id1').val(userData[0]);
+    	  $('#nom_user1').val(userData[1]);
+          $('#username1').val(userData[2]);
+          $('#password1').val(userData[3]);
+          $('#role_user1').val(userData[4]); 
+		console.log(data);
         // Mostramos el modal
+        console.log("Función llamada con el ID de usuario: " + userData[3]);
         var myModal = new bootstrap.Modal(document.getElementById('exampleModal1'), {});
         myModal.show();
       },
@@ -528,11 +512,8 @@
     });
   }
 </script>
-
-
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
+    
+    
 
 </body>
 

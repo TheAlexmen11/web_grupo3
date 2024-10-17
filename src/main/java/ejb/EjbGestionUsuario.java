@@ -7,7 +7,8 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
-import web_grupo3.Usuario;
+import web_grupo3jpa.Usuario;
+
 
 /**
  * Session Bean implementation class EjbGestionUsuario
