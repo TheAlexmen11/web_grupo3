@@ -33,5 +33,20 @@ public class EjbGestionCliente {
 	        
 	        }
 
+		public void eliminarCliente(int id) {
+			Cliente e = em.find(Cliente.class, id);
+			em.remove(e);
+		}
+		public Cliente consultarPorId(int id) {
+			Cliente e = em.find(Cliente.class, id);
+			return e;
+		}
+		public void actualizarCliente(Usuario nuevo) {
+			System.out.println("registrarEstudiante");
+			em.merge(nuevo);
+		}
+		public Cliente obtenerClientePorId(int parameter) {
+	        return em.find(Cliente.class, parameter);  
+		}
 
 }
