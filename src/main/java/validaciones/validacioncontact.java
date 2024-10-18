@@ -21,10 +21,10 @@ public class validacioncontact {
     }
 
     public static boolean processForm(HttpServletRequest request) {
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String message = request.getParameter("message");
+        String name = request.getParameter("nombre");
+        String email = request.getParameter("correo");
+        String phone = request.getParameter("telefono");
+        String message = request.getParameter("comentario");
 
         boolean isValid = true;
 

@@ -54,42 +54,43 @@
                     </div>
                     <div class="row gx-5 justify-content-center">
                         <div class="col-lg-8 col-xl-6">
-                            <form id="contactForm" method="post">
+                            <form id="contactForm" action="ServletComentarioRegistro" method="post">
 						        <!-- Nombre -->
-						        <div class="form-floating mb-3">
-						            <input class="form-control" id="name" name="name" type="text" placeholder="Ingrese su nombre" />
-						            <label for="name">Nombre Completo</label>
-						            <% if (request.getAttribute("nameError") != null) { %>
-						                <div class="error"><%= request.getAttribute("nameError") %></div> <!-- Mensaje de error en rojo -->
-						            <% } %>
-						        </div>
-						
-						        <!-- Correo Electrónico -->
-						        <div class="form-floating mb-3">
-						            <input class="form-control" id="email" name="email" type="email" placeholder="nombre@ejemplo.com" />
-						            <label for="email">Correo Electrónico</label>
-						            <% if (request.getAttribute("emailError") != null) { %>
-						                <div class="error"><%= request.getAttribute("emailError") %></div> <!-- Mensaje de error en rojo -->
-						            <% } %>
-						        </div>
-						
-						        <!-- Número de Teléfono -->
-						        <div class="form-floating mb-3">
-						            <input class="form-control" id="phone" name="phone" type="tel" placeholder="Ingrese su teléfono" />
-						            <label for="phone">Número de Teléfono</label>
-						            <% if (request.getAttribute("phoneError") != null) { %>
-						                <div class="error"><%= request.getAttribute("phoneError") %></div> <!-- Mensaje de error en rojo -->
-						            <% } %>
-						        </div>
-						
-						        <!-- Mensaje -->
-						        <div class="form-floating mb-3">
-						            <textarea class="form-control" id="message" name="message" placeholder="Escriba su mensaje" style="height: 10rem"></textarea>
-						            <label for="message">Mensaje</label>
-						            <% if (request.getAttribute("messageError") != null) { %>
-						                <div class="error"><%= request.getAttribute("messageError") %></div> <!-- Mensaje de error en rojo -->
-						            <% } %>
-						        </div>
+									<div class="form-floating mb-3">
+									    <input class="form-control" id="name" name="nombre" type="text" placeholder="Ingrese su nombre" />
+									    <label for="name">Nombre Completo</label>
+									    <% if (request.getAttribute("nameError") != null) { %>
+									        <div class="error"><%= request.getAttribute("nameError") %></div>
+									    <% } %>
+									</div>
+									
+									<!-- Correo Electrónico -->
+									<div class="form-floating mb-3">
+									    <input class="form-control" id="email" name="correo" type="email" placeholder="nombre@ejemplo.com" />
+									    <label for="email">Correo Electrónico</label>
+									    <% if (request.getAttribute("emailError") != null) { %>
+									        <div class="error"><%= request.getAttribute("emailError") %></div>
+									    <% } %>
+									</div>
+									
+									<!-- Número de Teléfono -->
+									<div class="form-floating mb-3">
+									    <input class="form-control" id="phone" name="telefono" type="tel" placeholder="Ingrese su teléfono" />
+									    <label for="phone">Número de Teléfono</label>
+									    <% if (request.getAttribute("phoneError") != null) { %>
+									        <div class="error"><%= request.getAttribute("phoneError") %></div>
+									    <% } %>
+									</div>
+									
+									<!-- Mensaje -->
+									<div class="form-floating mb-3">
+									    <textarea class="form-control" id="message" name="comentario" placeholder="Escriba su mensaje" style="height: 10rem"></textarea>
+									    <label for="message">Mensaje</label>
+									    <% if (request.getAttribute("messageError") != null) { %>
+									        <div class="error"><%= request.getAttribute("messageError") %></div>
+									    <% } %>
+									</div>
+
 						
 						        <!-- Botón Enviar -->
 						        <div class="d-grid">

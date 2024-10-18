@@ -1,10 +1,18 @@
 package web_grupo3;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Comentario {
 	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id_comentario;	
 	private String nombre;
-	private String correp;
+	private String correo;
 	private int telefono;
 	private String comentario;
 	
@@ -20,11 +28,11 @@ public class Comentario {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getCorrep() {
-		return correp;
+	public String getCorreo() {
+		return correo;
 	}
-	public void setCorrep(String correp) {
-		this.correp = correp;
+	public void setCorreo(String correo) {
+		this.correo = correo;
 	}
 	public int getTelefono() {
 		return telefono;
