@@ -7,13 +7,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import web_grupo3jpa.Cliente;
-import web_grupo3jpa.Usuario;
 
 import java.io.IOException;
 import java.util.List;
 
 import ejb.EjbGestionCliente;
-import ejb.EjbGestionUsuario;
 
 @WebServlet("ServletClienteConsultar")
 public class ServletClienteConsultar extends HttpServlet {

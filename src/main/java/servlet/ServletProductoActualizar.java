@@ -24,14 +24,19 @@ public class ServletProductoActualizar extends HttpServlet {
         Producto producto = ejb.consultarPorId(Integer.parseInt(request.getParameter("id_product")));
         
         if (producto != null) {
-            producto.setTipoProduct(request.getParameter("tipo_product"));
-            producto.setMarcaProduct(request.getParameter("marca_product"));
-            producto.setDescripcion(request.getParameter("descripcion_product"));
-            producto.setImgProduct(request.getParameter("img_product"));
-            producto.setPrecio(new BigDecimal(request.getParameter("precio_product")));
+            producto.setTipoProduct(request.getParameter("tipo_product_edit"));
+            producto.setMarcaProduct(request.getParameter("marca_product_edit"));
+            producto.setDescripcion(request.getParameter("descripcion_product_edit"));
+            producto.setImgProduct(request.getParameter("img_product_edit"));
+            System.out.println("precio producto: "+request.getParameter("tipo_product_edit"));
+            System.out.println("precio producto: "+request.getParameter("marca_product_edit"));
+            System.out.println("precio producto: "+request.getParameter("descripcion_product_edit"));
+            System.out.println("precio producto: "+request.getParameter("img_product_edit"));
+
+            producto.setPrecio(new BigDecimal(request.getParameter("precio_product_edit")));
 
             ejb.actualizarProducto(producto);
-            response.sendRedirect("dash_producto.jsp");
+            request.getRequestDispatcher("/dash_product.jsp").forward(request, response);;
         } else {
             response.getWriter().write("Producto no encontrado para actualizar.");
         }

@@ -9,9 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import ejb.EjbGestionCliente;
-import ejb.EjbGestionUsuario;
 import web_grupo3jpa.Cliente;
-import web_grupo3jpa.Usuario;
 
 @WebServlet("ServletClienteRegistro")
 public class ServletClienteRegistrar extends HttpServlet {
@@ -26,7 +24,6 @@ public class ServletClienteRegistrar extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("id_cliente:" + request.getParameter("id_cliente"));
 		System.out.println("nom_cliente:" + request.getParameter("nom_cliente"));
 		System.out.println("dni_cliente:" + request.getParameter("dni_cliente"));
 		System.out.println("email_cliente:" + request.getParameter("email_cliente"));
@@ -34,23 +31,7 @@ public class ServletClienteRegistrar extends HttpServlet {
 		// Crear un nuevo cliente
 		Cliente nuevo = new Cliente();
 		
-		String idClienteStr = request.getParameter("id_cliente");
-	    if (idClienteStr != null && !idClienteStr.isEmpty()) {
-	        try {
-	            Integer idCliente = Integer.parseInt(idClienteStr);
-	            nuevo.setIdCliente(idCliente); // Asignar el ID al objeto Cliente
-	        } catch (NumberFormatException e) {
-	            System.out.println("Error: ID de cliente no es un número válido.");
-	            request.setAttribute("error", "ID de cliente no válido. Debe ser un número.");
-	            request.getRequestDispatcher("errorPage.jsp").forward(request, response);
-	            return;
-	        }
-	    } else {
-	        System.out.println("Error: ID de cliente está vacío.");
-	        request.setAttribute("error", "ID de cliente no puede estar vacío.");
-	        request.getRequestDispatcher("errorPage.jsp").forward(request, response);
-	        return;
-	    }
+
 		nuevo.setNomCliente(request.getParameter("nom_cliente"));
 		
 
@@ -96,6 +77,6 @@ public class ServletClienteRegistrar extends HttpServlet {
 		}
 
 		ejb.registrarCliente(nuevo);
-		request.getRequestDispatcher("dash_Cliente.jsp").forward(request, response);
+		request.getRequestDispatcher("dash_cliente.jsp").forward(request, response);
 			}
 }

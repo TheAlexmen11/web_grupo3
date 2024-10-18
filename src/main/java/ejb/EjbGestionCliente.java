@@ -41,7 +41,7 @@ public class EjbGestionCliente {
 			Cliente e = em.find(Cliente.class, id);
 			return e;
 		}
-		public void actualizarCliente(Usuario nuevo) {
+		public void actualizarCliente(Cliente nuevo) {
 			System.out.println("registrarEstudiante");
 			em.merge(nuevo);
 		}
