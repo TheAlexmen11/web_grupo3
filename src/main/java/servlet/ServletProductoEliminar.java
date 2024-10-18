@@ -20,6 +20,6 @@ public class ServletProductoEliminar extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("idToDelete"));
         ejb.eliminarProducto(id);
-        response.sendRedirect("dash_producto.jsp");
+        response.sendRedirect(request.getContextPath() + "/ServletProductoConsultar");
     }
 }

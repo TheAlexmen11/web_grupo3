@@ -196,7 +196,7 @@
 				                </div>
 				                <div class="modal-body">
 				                    <div id="message"></div>
-				                    <form id="producto-form">
+				                     <form id="user-form"   action="ServletProductoRegistrar"  method="POST">
 				                        <div class="mb-2">
 				                            <label for="tipo_product" class="col-form-label">Tipo de Producto:</label>
 				                            <input type="text" class="form-control" id="tipo_product" name="tipo_product" required>
@@ -217,11 +217,10 @@
 				                            <label for="precio_product" class="col-form-label">Precio:</label>
 				                            <input type="number" class="form-control" id="precio_product" name="precio_product" required>
 				                        </div>
-				                        <div class="modal-footer">
-				                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-				                            <!-- Agregar ID para identificar el botón de agregar producto -->
-				                            <button type="button" class="btn btn-primary" id="save-product">Agregar</button>
-				                        </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                                  </div>
 				                    </form>
 				                </div>
 				            </div></div>
@@ -254,7 +253,18 @@
 										        <td>${producto.precio}</td>
 										        <td>
 										            <button class="btn btn-warning" onclick="editarProducto(${producto.idProduct}, '${producto.tipoProduct}', '${producto.marcaProduct}', '${producto.descripcion}', '${producto.imgProduct}', ${producto.precio})">Editar</button>
-										            <button class="btn btn-danger" onclick="confirmarEliminacion(${producto.idProduct})">Eliminar</button>
+										            
+										            
+										            
+										            <form action="ServletProductoEliminar" method="post" style="display:inline;">
+									                    <input type="hidden" name="idToDelete" value="${producto.idProduct}"/>
+									                    <button type="submit" class="btn btn-danger btn-icon-split">
+									                        <span class="icon text-white">
+									                            <i class="fas fa-trash"></i>
+									                        </span>
+									                        <span class="text">Eliminar</span>
+									                    </button>
+								                    </form>
 										        </td>
 										    </tr>
 										</c:forEach>
@@ -345,30 +355,7 @@
 		<script src="js/sb-admin-2.min.js"></script>
 		
 		<script>
-				$(document).ready(function() {
-		            // Función para manejar el clic en el botón de agregar producto
-		            $('#save-product').on('click', function() {
-		                // Realizar la solicitud AJAX
-		                $.ajax({
-		                    type: 'POST',
-		                    url: 'ServletProductoAgregar', // Cambia esto por la URL correcta de tu servlet
-		                    data: $('#producto-form').serialize(), // Serializamos los datos del formulario
-		                    success: function(response) {
-		                        // Mostrar un mensaje de éxito y cerrar el modal
-		                        $('#message').html('<div class="alert alert-success">Producto agregado exitosamente.</div>');
-		                        $('#producto-form')[0].reset(); // Limpiar el formulario
-		                        setTimeout(function() {
-		                            $('#exampleModal').modal('hide'); // Ocultar el modal
-		                            location.reload(); // Recargar la página para ver el nuevo producto agregado
-		                        }, 2000); // Espera 2 segundos antes de cerrar el modal
-		                    },
-		                    error: function(xhr, status, error) {
-		                        // Mostrar un mensaje de error en caso de fallo
-		                        $('#message').html('<div class="alert alert-danger">Error al agregar producto.</div>');
-		                    }
-		                });
-		            });
-		        });
+
 					
 			    // Función para editar un producto
 			    $(document).on('click', '.btn-warning', function() {
@@ -398,24 +385,7 @@
 			        });
 			    });
 			
-			    // Función para eliminar un producto
-			    $(document).on('click', '.btn-danger', function() {
-			        if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
-			            const id = $(this).closest('tr').find('td:nth-child(1)').text();
-			            $.ajax({
-			                type: 'POST',
-			                url: 'ServletProductoEliminar',
-			                data: { id_product: id },
-			                success: function(response) {
-			                    location.reload();
-			                },
-			                error: function(xhr, status, error) {
-			                    alert('Error al eliminar el producto.');
-			                }
-			            });
-			        }
-			    });
-			});
+			   
 			</script>
 
     </div>

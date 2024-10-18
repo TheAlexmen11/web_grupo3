@@ -40,7 +40,7 @@ public class EjbGestionUsuario {
 		return e;
 	}
 	public void actualizarUsuario(Usuario nuevo) {
-		System.out.println("registrarEstudiante");
+		
 		em.merge(nuevo);
 	}
 	public Usuario obtenerUsuarioPorId(int parameter) {

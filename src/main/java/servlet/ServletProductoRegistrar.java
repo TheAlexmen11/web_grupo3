@@ -21,6 +21,7 @@ public class ServletProductoRegistrar extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Producto nuevoProducto = new Producto();
+        System.out.println("aqui---> "+request.getParameter("tipo_product"));
         nuevoProducto.setTipoProduct(request.getParameter("tipo_product"));
         nuevoProducto.setMarcaProduct(request.getParameter("marca_product"));
         nuevoProducto.setDescripcion(request.getParameter("descripcion_product"));
@@ -28,6 +29,5 @@ public class ServletProductoRegistrar extends HttpServlet {
         nuevoProducto.setPrecio(new BigDecimal(request.getParameter("precio_product")));
 
         ejb.registrarProducto(nuevoProducto);
-        response.sendRedirect("dash_producto.jsp"); // Cambia a la vista que desees
-    }
+        response.sendRedirect(request.getContextPath() + "/ServletProductoConsultar");    }
 }
