@@ -2,6 +2,7 @@ package ejb;
 
 import java.util.List;
 
+import dto.ServicioDTO;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
@@ -20,7 +21,7 @@ public class EjbGestionServicio {
         // TODO Auto-generated constructor stub
     }
     
-    public List<Object[]> obtenerInformacionServicio() {
+    public List<ServicioDTO> obtenerInformacionServicio() {
         String jpql = "SELECT "
                 + "c.dniCliente, "
                 + "c.nomCliente, "
@@ -34,7 +35,7 @@ public class EjbGestionServicio {
                 + "JOIN c.equipoServicios  e "
                 + "JOIN e.detalleServicios d";
 
-        TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
+        TypedQuery<ServicioDTO> query = em.createQuery(jpql, ServicioDTO.class);
         return query.getResultList();
         
         }

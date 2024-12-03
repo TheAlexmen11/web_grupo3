@@ -13,8 +13,10 @@ if (request.getAttribute("infoServicios") == null) {
 }
 %>
 
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 
@@ -39,7 +41,40 @@ if (request.getAttribute("infoServicios") == null) {
 
 <!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
+<style>
+.file-input {
+	margin-bottom: 10px;
+}
 
+.img-preview {
+	max-width: 150px;
+	margin-top: 10px;
+}
+
+/* Contenedor para cada miniatura de imagen, permite posicionar el botón de eliminar */
+.img-preview-container {
+	position: relative;
+	display: inline-block;
+	margin-right: 10px; /* Espacio entre miniaturas */
+}
+/* Botón de eliminar en la esquina superior derecha de cada miniatura */
+.remove-btn {
+	position: absolute;
+	top: -5px;
+	right: -5px;
+	background-color: #dc3545; /* Color rojo para destacar */
+	color: white;
+	border: none;
+	border-radius: 50%; /* Redondeado */
+	width: 24px;
+	height: 24px;
+	font-size: 14px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+</style>
 </head>
 
 <body id="page-top">
@@ -112,8 +147,9 @@ if (request.getAttribute("infoServicios") == null) {
 					aria-labelledby="headingPages" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Servicios:</h6>
-						<a class="collapse-item" href="dash_servicio.jsp">Servicios</a> <a
-							class="collapse-item" href="tables.html">Equipos</a>
+						<a class="collapse-item" href="dash_servicio.jsp">Recepcion de
+							Equipos</a> <a class="collapse-item" href="tables.html">Terminar
+							Reparacion</a>
 					</div>
 				</div></li>
 
@@ -128,7 +164,7 @@ if (request.getAttribute("infoServicios") == null) {
 					aria-labelledby="headingPages" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Ventas:</h6>
-						<a class="collapse-item" href="tables.html">Productos</a> <a
+						<a class="collapse-item" href="dash_venta.jsp">Productos</a> <a
 							class="collapse-item" href="tables.html">Equipos</a>
 					</div>
 				</div></li>
@@ -259,7 +295,7 @@ if (request.getAttribute("infoServicios") == null) {
 							<!-- Modal -->
 							<div class="modal fade" id="exampleModal" tabindex="-1"
 								aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog">
+								<div class="modal-dialog modal-lg">
 									<div class="modal-content">
 										<div class="modal-header">
 											<h5 class="modal-title" id="exampleModalLabel"></h5>
@@ -270,38 +306,285 @@ if (request.getAttribute("infoServicios") == null) {
 											<div id="message"></div>
 											<form id="user-form" action="ServletUsuarioRegistro"
 												method="POST">
-												<div class="mb-2">
-													<label for="recipient-name" class="col-form-label">Nombre
-														Completo:</label> <input type="text" class="form-control"
-														id="nom_user" name="nom_user">
-												</div>
-												<div class="mb-2">
-													<label for="recipient-name" class="col-form-label">Username:</label>
-													<input type="text" class="form-control" id="username"
-														name="username">
-												</div>
-												<div class="mb-2">
-													<label for="recipient-name" class="col-form-label">Contraseña:</label>
-													<input type="password" class="form-control" id="password"
-														name="password">
-												</div>
-												<div class="mb-2" id="roles">
-													<label class="col-form-label">Rol</label> <select
-														class="form-select" name="role_user" id="role_user">
-														<option value="" selected="">Seleccionar Rol</option>
+												<div class="row">
+													<label for="marca" class="col-form-label">Cliente:</label>
 
-														<option value="Administrador">Administrador</option>
-														<option value="Tecnico">Tecnico</option>
+													<div class="input-group">
+														<select class="form-select" id="cliente" name="cliente">
+															<option value="">Seleccione</option>
+															<c:forEach items="${infoServicios}" var="i">
+															
+																<option value="1">${i[0]}</option>
+															</c:forEach>
 
-													</select>
+															
+
+														</select>
+														<button class="btn btn-primary" type="button">
+															<i class="fa fa-plus fa-sm"></i>
+														</button>
+													</div>
+
 												</div>
+												<div class="row">
+													<div class="col-md-6 mb-2">
+														<label for="marca" class="col-form-label">F.
+															Ingreso:</label> <input type="date" class="form-control"
+															id="marca" name="marca">
+													</div>
+													<div class="col-md-6 mb-2">
+														<label for="marca" class="col-form-label">Tecnico:</label>
+
+														<div class="input-group">
+															<select class="form-select" id="cliente" name="cliente">
+																<option value="">Seleccione</option>
+																<option value="1">Efrain | 1</option>
+																<option value="2">Dayvis Julian | 455434443</option>
+																<option value="3">Ricardo Guardado | 012344567</option>
+																<option value="4">Carlos Rojas | 44477123</option>
+																<option value="5">Daniel Prueba | x3646818f</option>
+
+															</select>
+															<button class="btn btn-primary" type="button">
+																<i class="fa fa-plus fa-sm"></i>
+															</button>
+														</div>
+													</div>
+												</div>
+												<div class="border-top my-3"></div>
+
+												<div class="container mt-3">
+													<!-- Nav tabs -->
+													<ul class="nav nav-tabs" role="tablist">
+														<li class="nav-item"><a class="nav-link active"
+															data-toggle="tab" href="#equipos">Equipos
+																Recepcionados</a></li>
+														<li class="nav-item"><a class="nav-link"
+															data-toggle="tab" href="#detalle">Detalles de
+																Servicio</a></li>
+														<li class="nav-item"><a class="nav-link"
+															data-toggle="tab" href="#fotos">Fotos</a></li>
+													</ul>
+
+													<!-- Tab panes -->
+													<div class="tab-content">
+														<div id="equipos" class="container tab-pane active">
+															<br>
+															<h3>Equipos Recepcionados</h3>
+															<div class="row">
+																<div class="col-md-6 mb-2">
+																	<label for="serie" class="col-form-label">Marca:</label>
+																	<input type="text" class="form-control" id="serie"
+																		name="serie">
+																</div>
+																<div class="col-md-6 mb-2">
+																	<label for="procesador" class="col-form-label">Modelo:</label>
+																	<input type="text" class="form-control" id="procesador"
+																		name="procesador">
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-6 mb-2">
+																	<label for="memoria" class="col-form-label">Serie:</label>
+																	<input type="text" class="form-control" id="memoria"
+																		name="memoria">
+																</div>
+																<div class="col-md-6 mb-2">
+																	<label for="disco" class="col-form-label">Procesador:</label>
+																	<input type="text" class="form-control" id="disco"
+																		name="disco">
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-6 mb-2">
+																	<label for="memoria" class="col-form-label">Memoria:</label>
+																	<input type="text" class="form-control" id="memoria"
+																		name="memoria">
+																</div>
+																<div class="col-md-6 mb-2">
+																	<label for="disco" class="col-form-label">Disco:</label>
+																	<input type="text" class="form-control" id="disco"
+																		name="disco">
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-6 mb-2">
+																	<label for="mainboard" class="col-form-label">MainBoard:</label>
+																	<input type="text" class="form-control" id="mainboard"
+																		name="mainboard">
+																</div>
+																<div class="col-md-6 mb-2">
+																	<label for="tarjeta_video" class="col-form-label">Tarjeta
+																		Video:</label> <input type="text" class="form-control"
+																		id="tarjeta_video" name="tarjeta_video">
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-6 mb-2">
+																	<label for="memoria" class="col-form-label">Fuente:</label>
+																	<input type="text" class="form-control" id="memoria"
+																		name="memoria">
+																</div>
+																<div class="col-md-6 mb-2">
+																	<label for="disco" class="col-form-label">Cargador:</label>
+																	<input type="text" class="form-control" id="disco"
+																		name="disco">
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-6 mb-2">
+																	<label for="memoria" class="col-form-label">bateria:</label>
+																	<input type="text" class="form-control" id="memoria"
+																		name="memoria">
+																</div>
+																<div class="col-md-6 mb-2">
+																	<label for="disco" class="col-form-label">otros:</label>
+																	<input type="text" class="form-control" id="disco"
+																		name="disco">
+																</div>
+															</div>
+
+
+
+														</div>
+														<div id="detalle" class="container tab-pane fade">
+															<br>
+															<h3>Detalles de Servicio</h3>
+															<div class="row">
+																<div class="col-md-12 mb-2">
+																	<label for="memoria" class="col-form-label">Reporte
+																		del Cliente:</label> <input type="text" class="form-control"
+																		id="memoria" name="memoria">
+																</div>
+																<div class="col-md-12 mb-2">
+																	<label for="memoria" class="col-form-label">Informe
+																		Inicial:</label> <input type="text" class="form-control"
+																		id="memoria" name="memoria">
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-6 mb-2">
+																	<label for="memoria" class="col-form-label">Precio:</label>
+																	<input type="text" class="form-control" id="memoria"
+																		name="memoria">
+																</div>
+																<div class="col-md-6 mb-2">
+																	<label for="memoria" class="col-form-label">Abono:</label>
+																	<input type="text" class="form-control" id="memoria"
+																		name="memoria">
+																</div>
+															</div>
+														</div>
+														<div id="fotos" class="container tab-pane fade">
+															<br>
+															<h3>Fotos</h3>
+															<div class="row">
+
+																<div class="col-md-6 mb-2">
+																	<div id="fileInputsContainer">
+																		<div class="file-input">
+																			<input type="file" id="fileInput1" name="fileInput[]"
+																				class="form-control" accept="image/*"
+																				onchange="previewImage(this)">
+																		</div>
+																	</div>
+																	<div id="previewContainer"
+																		class="d-flex flex-wrap mt-3"></div>
+																</div>
+
+															</div>
+
+														</div>
+														<input type="hidden" id="user_id" name="user_id">
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary"
+																data-bs-dismiss="modal">Cerrar</button>
+															<button type="submit" class="btn btn-primary">Guardar</button>
+														</div>
+
+
+													</div>
+												</div>
+
+
+												<!-- 
+												<div class="row">
+													<div class="col-md-6 mb-2">
+														<label for="serie" class="col-form-label">Marca:</label> <input
+															type="text" class="form-control" id="serie" name="serie">
+													</div>
+													<div class="col-md-6 mb-2">
+														<label for="procesador" class="col-form-label">Modelo:</label>
+														<input type="text" class="form-control" id="procesador"
+															name="procesador">
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6 mb-2">
+														<label for="memoria" class="col-form-label">Serie:</label>
+														<input type="text" class="form-control" id="memoria"
+															name="memoria">
+													</div>
+													<div class="col-md-6 mb-2">
+														<label for="disco" class="col-form-label">Procesador:</label>
+														<input type="text" class="form-control" id="disco"
+															name="disco">
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6 mb-2">
+														<label for="memoria" class="col-form-label">Memoria:</label>
+														<input type="text" class="form-control" id="memoria"
+															name="memoria">
+													</div>
+													<div class="col-md-6 mb-2">
+														<label for="disco" class="col-form-label">Disco:</label> <input
+															type="text" class="form-control" id="disco" name="disco">
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6 mb-2">
+														<label for="mainboard" class="col-form-label">MainBoard:</label>
+														<input type="text" class="form-control" id="mainboard"
+															name="mainboard">
+													</div>
+													<div class="col-md-6 mb-2">
+														<label for="tarjeta_video" class="col-form-label">Tarjeta
+															Video:</label> <input type="text" class="form-control"
+															id="tarjeta_video" name="tarjeta_video">
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6 mb-2">
+														<label for="memoria" class="col-form-label">Fuente:</label>
+														<input type="text" class="form-control" id="memoria"
+															name="memoria">
+													</div>
+													<div class="col-md-6 mb-2">
+														<label for="disco" class="col-form-label">Cargador:</label>
+														<input type="text" class="form-control" id="disco"
+															name="disco">
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6 mb-2">
+														<label for="memoria" class="col-form-label">bateria:</label>
+														<input type="text" class="form-control" id="memoria"
+															name="memoria">
+													</div>
+													<div class="col-md-6 mb-2">
+														<label for="disco" class="col-form-label">otros:</label> <input
+															type="text" class="form-control" id="disco" name="disco">
+													</div>
+												</div>
+
 
 												<input type="hidden" id="user_id" name="user_id">
 												<div class="modal-footer">
 													<button type="button" class="btn btn-secondary"
 														data-bs-dismiss="modal">Cerrar</button>
 													<button type="submit" class="btn btn-primary">Guardar</button>
-												</div>
+												</div>-->
 											</form>
 										</div>
 
@@ -398,11 +681,13 @@ if (request.getAttribute("infoServicios") == null) {
 															<a>${i[7]} </a>
 														</div>
 													</c:if> <c:if test="${i[7] == 'en revision'}">
-														<div class="btn-warning fw-bold btn-icon-split p-2 rounded">
+														<div
+															class="btn-warning fw-bold btn-icon-split p-2 rounded">
 															<a>${i[7]} </a>
 														</div>
 													</c:if> <c:if test="${i[7] == 'finalizado'}">
-														<div class="btn-success fw-bold btn-icon-split p-2 rounded">
+														<div
+															class="btn-success fw-bold btn-icon-split p-2 rounded">
 															<a>${i[7]} </a>
 														</div>
 													</c:if></td>
@@ -526,6 +811,62 @@ if (request.getAttribute("infoServicios") == null) {
 			});
 		}
 	</script>
+
+
+	<script>
+        let fileInputCount = 1;
+
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Ocultar el input actual
+                    input.style.display = 'none';
+
+                    // Crear contenedor para la imagen y el botón de eliminar
+                    const imgContainer = document.createElement('div');
+                    imgContainer.className = 'img-preview-container';
+
+                    // Crear miniatura de la imagen
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'img-preview img-thumbnail';
+                    imgContainer.appendChild(img);
+
+                    // Crear botón de eliminar
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'remove-btn';
+                    removeBtn.innerHTML = '&times;';
+                    removeBtn.onclick = function() {
+                        // Al hacer clic en eliminar, remover la imagen y el input asociado
+                        imgContainer.remove();
+                        input.remove();
+                    };
+                    imgContainer.appendChild(removeBtn);
+
+                    // Agregar la miniatura al contenedor de vistas previas
+                    document.getElementById('previewContainer').appendChild(imgContainer);
+
+                    // Agregar un nuevo input:file
+                    addFileInput();
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function addFileInput() {
+            fileInputCount++;
+            const container = document.getElementById('fileInputsContainer');
+            const newFileInputDiv = document.createElement('div');
+            newFileInputDiv.classList.add('file-input');
+            newFileInputDiv.innerHTML = `
+                <input type="file" id="fileInput${fileInputCount}" name="fileInput[]" class="form-control" accept="image/*" onchange="previewImage(this)">
+            `;
+            container.appendChild(newFileInputDiv);
+        }
+    </script>
+
+
 	<!-- Page level custom scripts -->
 	<script src="js/demo/datatables-demo.js"></script>
 

@@ -113,8 +113,8 @@ if (request.getAttribute("usuarios") == null) {
 					aria-labelledby="headingPages" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Servicios:</h6>
-						<a class="collapse-item" href="dash_servicio.jsp">Servicios</a> <a
-							class="collapse-item" href="tables.html">Equipos</a>
+						<a class="collapse-item" href="dash_servicio.jsp">Recepcion de Equipos</a> <a
+							class="collapse-item" href="tables.html">Terminar Reparacion</a>
 					</div>
 				</div></li>
 
@@ -129,8 +129,8 @@ if (request.getAttribute("usuarios") == null) {
 					aria-labelledby="headingPages" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Ventas:</h6>
-						<a class="collapse-item" href="tables.html">Productos</a> <a
-							class="collapse-item" href="tables.html">Equipos</a>
+						<a class="collapse-item" href="dash_venta.jsp"> Venta Productos</a> <a
+							class="collapse-item" href="tables.html">Listar Ventas</a>
 					</div>
 				</div></li>
 
