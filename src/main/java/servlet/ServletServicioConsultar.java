@@ -32,6 +32,4 @@ public class ServletServicioConsultar extends HttpServlet {
         request.getRequestDispatcher("/dash_servicio.jsp").forward(request, response);
 	}
 
-
-
 }
