@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Estado de Reparación</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet" />
+</head>
+
+<h:body>
+	<div class="container py-5">
+		<div class="text-center mb-4">
+			<h1 class="display-6">Estado de Reparación</h1>
+			<p class="text-muted">Consulta el estado de tu equipo fácilmente.</p>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div class="card shadow-sm">
+					<div class="card-body">
+					<h:form>
+						<h5 class="card-title text-center">Detalles del Equipo</h5>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item"><strong>DNI Cliente:</strong> <span>#{beanConsultaEstado.resultados.dniCliente}</span>
+							</li>
+							<li class="list-group-item"><strong>Nombre Cliente:</strong>
+								<span>#{beanConsultaEstado.resultados.nomCliente}</span></li>
+							<li class="list-group-item"><strong>Teléfono
+									Cliente:</strong> <span>#{beanConsultaEstado.resultados.telefonoCliente}</span>
+							</li>
+							<li class="list-group-item"><strong>Marca:</strong> <span>#{beanConsultaEstado.resultados.marca}</span>
+							</li>
+							<li class="list-group-item"><strong>Modelo:</strong> <span>#{beanConsultaEstado.resultados.modelo}</span>
+							</li>
+							<li class="list-group-item"><strong>Fecha de
+									Ingreso:</strong> <span>#{beanConsultaEstado.resultados.fechaIngreso}</span>
+							</li>
+							<li class="list-group-item"><strong>Estado del
+									Servicio:</strong> <span class="badge bg-warning text-dark">
+									#{beanConsultaEstado.resultados.estadoServicio} </span></li>
+						</ul>
+						<div class="text-center mt-3">
+
+							<h:commandLink class="btn btn-primary" action="#{beanConsultaEstado.irPaginaConsulta}">
+								<h:outputText value="Salir"></h:outputText>
+							</h:commandLink>
+
+						</div>
+</h:form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</h:body>
+
+</html>

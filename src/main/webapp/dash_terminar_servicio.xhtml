@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -267,13 +267,10 @@
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3 d-sm-flex  justify-content-between">
-							<h6 class="m-0 font-weight-bold text-primary">RECEPCION DE
+							<h6 class="m-0 font-weight-bold text-primary">TERMINAR
 								SERVICIOS TECNICOS</h6>
 
-							<a href="#"
-								class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm "
-								data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-								class="fas fa-download fa-sm text-white-50"></i> Nuevo Servicio</a>
+
 
 
 							<!-- Modal -->
@@ -561,9 +558,13 @@
 										<f:facet name="header">
 											<h:outputText value="" />
 										</f:facet>
-										<button type="button" class="btn btn-danger">
-											<i class="fa fa-times" aria-hidden="true"></i>
-</button>
+
+										<button type="button" class="btn btn-info my-2">
+											<i class="fa fa-arrow-up" aria-hidden="true"></i>
+										</button>
+										<button type="button" class="btn btn-primary">
+											<i class="fa fa-check" aria-hidden="true"></i>
+										</button>
 									</h:column>
 								</h:dataTable>
 

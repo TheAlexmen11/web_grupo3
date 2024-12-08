@@ -1,6 +1,7 @@
 package dto;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class ServicioDTO {
     private Integer dniCliente;
@@ -8,14 +9,14 @@ public class ServicioDTO {
     private Integer telefonoCliente;
     private String marca;
     private String modelo;
-    private Date fechaIngreso;
+    private LocalDate fechaIngreso;
     private String reporCliente;
     private String estadoServicio;
     
     
     
 	public ServicioDTO(Integer dniCliente, String nomCliente, Integer telefonoCliente, String marca, String modelo,
-			Date fechaIngreso, String reporCliente, String estadoServicio) {
+			LocalDate fechaIngreso, String reporCliente, String estadoServicio) {
 		super();
 		this.dniCliente = dniCliente;
 		this.nomCliente = nomCliente;
@@ -56,10 +57,10 @@ public class ServicioDTO {
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}
-	public Date getFechaIngreso() {
+	public LocalDate getFechaIngreso() {
 		return fechaIngreso;
 	}
-	public void setFechaIngreso(Date fechaIngreso) {
+	public void setFechaIngreso(LocalDate fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
 	}
 	public String getReporCliente() {

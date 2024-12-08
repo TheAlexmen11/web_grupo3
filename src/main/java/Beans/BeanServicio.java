@@ -1,6 +1,10 @@
 package Beans;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +21,12 @@ import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.model.SelectItem;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import web_grupo3jpa.Cliente;
+import web_grupo3jpa.DetalleServicio;
+import web_grupo3jpa.EquipoServicio;
+import web_grupo3jpa.ImagenesServicio;
 import web_grupo3jpa.Usuario;
 
 /**
@@ -27,8 +36,8 @@ import web_grupo3jpa.Usuario;
 @RequestScoped
 public class BeanServicio implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int usuarios;
-	private int cliente;
+	private int id_usuario;
+	private int id_cliente;
 	
 	@Inject
 	private EjbGestionServicio ejb;
@@ -37,15 +46,17 @@ public class BeanServicio implements Serializable {
 	@Inject
 	private EjbGestionCliente ejbC;
 
+	@PersistenceContext(unitName = "web_grupo3jpa")
+	private EntityManager em;
+	
     private List<ServicioDTO> resultados;
     private List<SelectItem> itemUsuario;
     private List<SelectItem> itemCliente;
 
     
+    
  // Variables para fecha
-    private Date fechaIngreso;
-
-    // Variables para equipos recepcionados
+    private String fechaIngreso;
     private String marca;
     private String modelo;
     private String serie;
@@ -54,14 +65,68 @@ public class BeanServicio implements Serializable {
     private String disco;
     private String mainboard;
     private String tarjetaVideo;
-
-    // Variables para detalles de servicio
     private String reporteCliente;
     private String informeInicial;
     private String foto;
+    private String fuente;
+    private String bateria;
+    private String otros;
+    private String cargador;
+    private BigDecimal precio;
 
+   
     
-    @PostConstruct
+    public String getFechaIngreso() {
+		return fechaIngreso;
+	}
+
+
+	public void setFechaIngreso(String fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
+	}
+
+
+	public String getFuente() {
+		return fuente;
+	}
+
+
+	public void setFuente(String fuente) {
+		this.fuente = fuente;
+	}
+
+
+	public String getBateria() {
+		return bateria;
+	}
+
+
+	public void setBateria(String bateria) {
+		this.bateria = bateria;
+	}
+
+
+	public String getOtros() {
+		return otros;
+	}
+
+
+	public void setOtros(String otros) {
+		this.otros = otros;
+	}
+
+
+	public String getCargador() {
+		return cargador;
+	}
+
+
+	public void setCargador(String cargador) {
+		this.cargador = cargador;
+	}
+
+
+	@PostConstruct
     public void init() {
     	itemUsuario = new ArrayList();
     	itemCliente = new ArrayList();
@@ -82,34 +147,77 @@ public class BeanServicio implements Serializable {
     }
     
     
+	@Override
+	public String toString() {
+		return "BeanServicio [usuarios=" + id_usuario + ", cliente=" + id_cliente 
+				+ ", fechaIngreso=" + fechaIngreso
+				+ ", marca=" + marca + ", modelo=" + modelo + ", serie=" + serie + ", procesador=" + procesador
+				+ ", memoria=" + memoria + ", disco=" + disco + ", mainboard=" + mainboard + ", tarjetaVideo="
+				+ tarjetaVideo + ", reporteCliente=" + reporteCliente + ", informeInicial=" + informeInicial + ", foto="
+				+ foto + ", fuente=" + fuente + ", bateria=" + bateria + ", otros=" + otros + ", cargador=" + cargador
+				+ ", precio=" + precio + "]";
+	}
+
+
 	public void registrar() {
-		System.out.println("registrar");
-		System.out.println("cliente seleccionada: "+cliente);
-		System.out.println("fecha : "+fechaIngreso);
-		System.out.println("usuario seleccionado: "+usuarios);
-		System.out.println("marca : "+marca);
-		System.out.println("modelo : "+modelo);
-		System.out.println("serie : "+serie);
-		System.out.println("procesador : "+procesador);
-		System.out.println("memoria : "+memoria);
-		System.out.println("disco : "+disco);
-		System.out.println("mainboard : "+mainboard);
-		System.out.println("t.video : "+tarjetaVideo);
-		System.out.println("reporte cliente : "+reporteCliente);
-		System.out.println("informe inicial : "+reporteCliente);
-		System.out.println("fotos : "+foto);
+		Usuario usuario = em.find(Usuario.class, id_usuario);
+		Cliente cliente = em.find(Cliente.class, id_cliente);
+		LocalDate fechaIngresoF = LocalDate.parse(fechaIngreso, DateTimeFormatter.ISO_DATE);
+        EquipoServicio equipo = new EquipoServicio();
+        equipo.setMarca(marca);
+        equipo.setModelo(modelo);
+        equipo.setSerie(serie);
+        equipo.setProcesador(procesador);
+        equipo.setMemoria(memoria);
+        equipo.setDisco(disco);
+        equipo.setMainboard(mainboard);
+        equipo.setTVideo(tarjetaVideo);
+        equipo.setFuente(fuente);
+        equipo.setCargador(cargador);
+        equipo.setBateria(bateria);
+        equipo.setOtros(otros);
+        equipo.setUsuario(usuario);
+        equipo.setCliente(cliente);
+
+        DetalleServicio detalle = new DetalleServicio();
+        detalle.setFechaIngreso(fechaIngresoF);
+        detalle.setReporCliente(reporteCliente);
+        detalle.setInfInicial(informeInicial);
+        detalle.setPrecio(precio);
+        detalle.setEstadoServicio("pendiente");
+
+        List<ImagenesServicio> imagenes = new ArrayList<>();
+        ImagenesServicio imagen = new ImagenesServicio();
+        imagen.setRutaImagen(foto);
+        imagenes.add(imagen);
+        ejb.crearServicio(detalle, equipo, imagenes);
+		System.out.println(toString());
 	}
     
 
-	public int getUsuarios() {
-		return usuarios;
+
+
+    public int getId_usuario() {
+		return id_usuario;
 	}
 
-	public void setUsuarios(int usuarios) {
-		this.usuarios = usuarios;
+
+	public void setId_usuario(int id_usuarios) {
+		this.id_usuario = id_usuarios;
 	}
 
-    public List<ServicioDTO> getResultados() {
+
+	public int getId_cliente() {
+		return id_cliente;
+	}
+
+
+	public void setId_cliente(int id_cliente) {
+		this.id_cliente = id_cliente;
+	}
+
+
+	public List<ServicioDTO> getResultados() {
         return resultados;
     }
 
@@ -125,13 +233,6 @@ public class BeanServicio implements Serializable {
 		this.itemCliente = itemCliente;
 	}
 
-	public int getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(int cliente) {
-		this.cliente = cliente;
-	}
 
 
 	public String getMarca() {
@@ -189,14 +290,6 @@ public class BeanServicio implements Serializable {
 	}
 
 
-	public Date getFechaIngreso() {
-		return fechaIngreso;
-	}
-
-
-	public void setFechaIngreso(Date fechaIngreso) {
-		this.fechaIngreso = fechaIngreso;
-	}
 
 
 	public String getInformeInicial() {
@@ -258,6 +351,16 @@ public class BeanServicio implements Serializable {
 
 	public void setTarjetaVideo(String tarjetaVideo) {
 		this.tarjetaVideo = tarjetaVideo;
+	}
+
+
+	public BigDecimal getPrecio() {
+		return precio;
+	}
+
+
+	public void setPrecio(BigDecimal precio) {
+		this.precio = precio;
 	}
     
     
