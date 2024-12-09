@@ -274,8 +274,9 @@
 
 
 							<!-- Modal -->
-							<div class="modal fade" id="exampleModal" tabindex="-1"
-								aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal fade" id="modalActualizarServicio"
+								tabindex="-1" aria-labelledby="exampleModalLabel"
+								aria-hidden="true">
 								<div class="modal-dialog modal-lg">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -287,195 +288,50 @@
 											<div id="message"></div>
 
 											<h:form enctype="multipart/form-data">
-												<div class="row">
-													<label for="cliente" class="col-form-label">Cliente:</label>
-													<div class="input-group">
-														<h:selectOneMenu value="#{beanServicio.id_cliente}"
-															class="form-select" id="id_cliente" name="id_cliente">
-															<f:selectItems value="#{beanServicio.itemCliente}" />
-														</h:selectOneMenu>
-														<button class="btn btn-primary" type="button">
-															<i class="fa fa-plus fa-sm"></i>
-														</button>
-													</div>
-												</div>
 
 												<div class="row">
 													<div class="col-md-6 mb-2">
-														<label for="fechaIngreso" class="col-form-label">F.
-															Ingreso:</label>
-														<h:inputText type="date" class="form-control"
-															id="fechaIngreso" value="#{beanServicio.fechaIngreso}">
+														<label for="idEquipo" class="col-form-label"> ID:</label>
+														<h:inputText type="text" class="form-control" id="idEquipo"
+															readonly="true" />
 
+													</div>
+													<div class="col-md-6 mb-2">
+														<label for="usuario" class="col-form-label">Datos Usuario:</label>
+														<h:inputText class="form-control" id="usuario"
+															value="" readonly="true" >
 														</h:inputText>
-
-													</div>
-													<div class="col-md-6 mb-2">
-														<label for="tecnico" class="col-form-label">Técnico:</label>
-														<div class="input-group">
-															<h:selectOneMenu value="#{beanServicio.id_usuario}"
-																class="form-select" id="id_usuario" name="id_usuario">
-																<f:selectItems value="#{beanServicio.itemUsuario}" />
-															</h:selectOneMenu>
-															<button class="btn btn-primary" type="button">
-																<i class="fa fa-plus fa-sm"></i>
-															</button>
-														</div>
 													</div>
 												</div>
 
-												<div class="border-top my-3"></div>
+												<div class="row">
+													<div class="col-md-6 mb-2">
+														<label for="fechaIngreso1" class="col-form-label">F.
+															Ingreso:</label>
+														<h:inputText class="form-control" id="fechaIngreso1"
+															value="" />
 
-												<div class="container mt-3">
-													<!-- Nav tabs -->
-													<ul class="nav nav-tabs" role="tablist">
-														<li class="nav-item"><a class="nav-link active"
-															data-toggle="tab" href="#equipos">Equipos
-																Recepcionados</a></li>
-														<li class="nav-item"><a class="nav-link"
-															data-toggle="tab" href="#detalle">Detalles de
-																Servicio</a></li>
-														<li class="nav-item"><a class="nav-link"
-															data-toggle="tab" href="#fotos">Fotos</a></li>
-													</ul>
-
-													<!-- Tab panes -->
-													<div class="tab-content">
-														<div id="equipos" class="container tab-pane active">
-															<h3>Equipos Recepcionados</h3>
-															<div class="row">
-																<div class="col-md-6 mb-2">
-																	<label for="marca" class="col-form-label">Marca:</label>
-																	<h:inputText class="form-control" id="marca"
-																		value="#{beanServicio.marca}" />
-																</div>
-																<div class="col-md-6 mb-2">
-																	<label for="modelo" class="col-form-label">Modelo:</label>
-																	<h:inputText class="form-control" id="modelo"
-																		value="#{beanServicio.modelo}" />
-																</div>
-															</div>
-															<div class="row">
-																<div class="col-md-6 mb-2">
-																	<label for="serie" class="col-form-label">Serie:</label>
-																	<h:inputText class="form-control" id="serie"
-																		value="#{beanServicio.serie}" />
-																</div>
-																<div class="col-md-6 mb-2">
-																	<label for="procesador" class="col-form-label">Procesador:</label>
-																	<h:inputText class="form-control" id="procesador"
-																		value="#{beanServicio.procesador}" />
-																</div>
-															</div>
-															<div class="row">
-																<div class="col-md-6 mb-2">
-																	<label for="memoria" class="col-form-label">Memoria:</label>
-																	<h:inputText class="form-control" id="memoria"
-																		value="#{beanServicio.memoria}" />
-																</div>
-																<div class="col-md-6 mb-2">
-																	<label for="disco" class="col-form-label">Disco:</label>
-																	<h:inputText class="form-control" id="disco"
-																		value="#{beanServicio.disco}" />
-																</div>
-															</div>
-															<div class="row">
-																<div class="col-md-6 mb-2">
-																	<label for="mainboard" class="col-form-label">MainBoard:</label>
-																	<h:inputText class="form-control" id="mainboard"
-																		value="#{beanServicio.mainboard}" />
-																</div>
-																<div class="col-md-6 mb-2">
-																	<label for="tarjetaVideo" class="col-form-label">Tarjeta
-																		de Video:</label>
-																	<h:inputText class="form-control" id="tarjetaVideo"
-																		value="#{beanServicio.tarjetaVideo}" />
-																</div>
-															</div>
-															<div class="row">
-																<div class="col-md-6 mb-2">
-																	<label for="mainboard" class="col-form-label">Fuente:</label>
-																	<h:inputText class="form-control" id="fuente"
-																		value="#{beanServicio.fuente}" />
-																</div>
-																<div class="col-md-6 mb-2">
-																	<label for="tarjetaVideo" class="col-form-label">Cargador:</label>
-																	<h:inputText class="form-control" id="cargador"
-																		value="#{beanServicio.cargador}" />
-																</div>
-															</div>
-															<div class="row">
-																<div class="col-md-6 mb-2">
-																	<label for="mainboard" class="col-form-label">Bateria:</label>
-																	<h:inputText class="form-control" id="bateria"
-																		value="#{beanServicio.bateria}" />
-																</div>
-																<div class="col-md-6 mb-2">
-																	<label for="tarjetaVideo" class="col-form-label">otros:</label>
-																	<h:inputText class="form-control" id="otros"
-																		value="#{beanServicio.otros}" />
-																</div>
-															</div>
-														</div>
-
-														<div id="detalle" class="container tab-pane fade">
-															<h3>Detalles de Servicio</h3>
-															<div class="row">
-																<div class="col-md-12 mb-2">
-																	<label for="reporteCliente" class="col-form-label">Reporte
-																		del Cliente:</label>
-																	<h:inputText class="form-control" id="reporteCliente"
-																		value="#{beanServicio.reporteCliente}" />
-																</div>
-																<div class="col-md-12 mb-2">
-																	<label for="informeInicial" class="col-form-label">Informe
-																		Inicial:</label>
-																	<h:inputText class="form-control" id="informeInicial"
-																		value="#{beanServicio.informeInicial}" />
-																</div>
-															</div>
-															<div class="row">
-																<div class="col-md-12 mb-2">
-																	<label for="reporteCliente" class="col-form-label">Precio:</label>
-																	<h:inputText class="form-control" id="precio"
-																		value="#{beanServicio.precio}" />
-																</div>
-
-															</div>
-														</div>
-
-														<div id="fotos" class="container tab-pane fade">
-															<h3>Fotos</h3>
-															<div class="row">
-																<div class="col-md-6 mb-2">
-																	<h:inputText value="#{beanServicio.foto}"
-																		accept="image/*" />
-																</div>
-															</div>
-														</div>
-
-														<input type="hidden" id="user_id" name="user_id" value="" />
-														<div class="modal-footer">
-															<button type="button" class="btn btn-secondary"
-																data-bs-dismiss="modal">Cerrar</button>
-															<h:commandButton value="Registrar"
-																class="btn btn-primary"
-																action="#{beanServicio.registrar}">
-
-
-															</h:commandButton>
-														</div>
 													</div>
+													<div class="col-md-6 mb-2">
+														<label for="fechaIngreso12" class="col-form-label">F.
+															Ingreso:</label>
+														<h:inputText class="form-control" id="fechaIngreso12"
+															value="" />
+
+													</div>
+												</div>
+												<input type="hidden" id="user_id" name="user_id" value="" />
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-bs-dismiss="modal">Cerrar</button>
+													<h:commandButton value="Registrar" class="btn btn-primary"
+														action="#{beanServicio.registrar}">
+
+
+													</h:commandButton>
 												</div>
 											</h:form>
-
-
-
-
-
-
 										</div>
-
 									</div>
 								</div>
 							</div>
@@ -559,7 +415,8 @@
 											<h:outputText value="" />
 										</f:facet>
 
-										<button type="button" class="btn btn-info my-2">
+										<button type="button" class="btn btn-info my-2"
+											onclick="editarServicio('#{r.idEquipoServicio}','#{r.nomCliente}','#{r.marca}','#{r.modelo}')">
 											<i class="fa fa-arrow-up" aria-hidden="true"></i>
 										</button>
 										<button type="button" class="btn btn-primary">
@@ -650,7 +507,17 @@
 	<script src="js/demo/datatables-demo.js"></script>
 
 
-	>
+	<script>
+		function editarServicio(id,nom,marca,modelo) {
+			console.log(id);
+			document.getElementById('j_idt2:idEquipo').value = id;
+			document.getElementById('j_idt2:usuario').value = nom+"  |  "+marca+" "+modelo;
+			$('#modalActualizarServicio').modal('show');
+			
+		}
+		   
+	</script>
+
 
 
 

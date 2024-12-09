@@ -29,6 +29,7 @@ public class EjbGestionServicio {
                 + "c.dniCliente, "
                 + "c.nomCliente, "
                 + "c.telefonoCliente, "
+                + "e.idEquipo, "
                 + "e.marca, "
                 + "e.modelo, "
                 + "d.fechaIngreso, "

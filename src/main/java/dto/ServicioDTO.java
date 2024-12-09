@@ -4,9 +4,11 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 public class ServicioDTO {
+	
     private Integer dniCliente;
     private String nomCliente;
     private Integer telefonoCliente;
+    private Integer idEquipoServicio;
     private String marca;
     private String modelo;
     private LocalDate fechaIngreso;
@@ -15,12 +17,15 @@ public class ServicioDTO {
     
     
     
-	public ServicioDTO(Integer dniCliente, String nomCliente, Integer telefonoCliente, String marca, String modelo,
-			LocalDate fechaIngreso, String reporCliente, String estadoServicio) {
+
+	
+	public ServicioDTO(Integer dniCliente, String nomCliente, Integer telefonoCliente, Integer idEquipoServicio,
+			String marca, String modelo, LocalDate fechaIngreso, String reporCliente, String estadoServicio) {
 		super();
 		this.dniCliente = dniCliente;
 		this.nomCliente = nomCliente;
 		this.telefonoCliente = telefonoCliente;
+		this.idEquipoServicio = idEquipoServicio;
 		this.marca = marca;
 		this.modelo = modelo;
 		this.fechaIngreso = fechaIngreso;
@@ -74,6 +79,12 @@ public class ServicioDTO {
 	}
 	public void setEstadoServicio(String estadoServicio) {
 		this.estadoServicio = estadoServicio;
+	}
+	public Integer getIdEquipoServicio() {
+		return idEquipoServicio;
+	}
+	public void setIdEquipoServicio(Integer idEquipoServicio) {
+		this.idEquipoServicio = idEquipoServicio;
 	}
     
     
