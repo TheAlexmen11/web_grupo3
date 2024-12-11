@@ -484,6 +484,42 @@
 							</div>
 
 
+							<!-- Modal para confirmar la finalización de la reparación -->
+							<div class="modal fade" id="modalEliminar" tabindex="-1"
+								role="dialog" aria-labelledby="modalEliminarLabel"
+								aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<h:form enctype="multipart/form-data" id="form-elim">
+											<div class="modal-header">
+												<h5 class="modal-title" id="modalFinalizarLabel">Confirmar
+													Finalización</h5>
+												<button type="button" class="close" data-bs-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+
+												<h:inputHidden id="idEquipoHidden"
+													value="#{beanServicio.idEquipo}" />
+												<h:outputText
+													value="¿Está seguro de que desea finalizar la reparación?" />
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-bs-dismiss="modal">Cerrar</button>
+												<h:commandButton value="Eliminar Reparación"
+													class="btn btn-primary"
+													action="#{beanServicio.eliminarServicio}">
+
+												</h:commandButton>
+											</div>
+										</h:form>
+									</div>
+								</div>
+							</div>
+
 						</div>
 
 						<div class="card-body">
@@ -493,7 +529,12 @@
 									border="1" rendered="#{not empty beanServicio.resultados}"
 									class="table table-bordered" id="dataTable" width="100%"
 									cellspacing="0">
-
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="Id Equipo" />
+										</f:facet>
+										<h:outputText value="#{r.idEquipo}" />
+									</h:column>
 
 									<h:column>
 										<f:facet name="header">
@@ -558,12 +599,15 @@
 										</h:panelGroup>
 									</h:column>
 									<h:column>
+
 										<f:facet name="header">
-											<h:outputText value="" />
+											<h:outputText value="detalle servicio" />
 										</f:facet>
-										<button type="button" class="btn btn-danger">
+
+										<button type="button" class="btn btn-danger"
+											onclick="eliminarServicio('#{r.idEquipo}')">
 											<i class="fa fa-times" aria-hidden="true"></i>
-</button>
+										</button>
 									</h:column>
 								</h:dataTable>
 
@@ -649,7 +693,14 @@
 	<script src="js/demo/datatables-demo.js"></script>
 
 
-	>
+	<script>
+		function eliminarServicio(idEquipo) {
+			console.log(idEquipo);
+			document.getElementById('form-elim:idEquipoHidden').value = idEquipo;
+			$('#modalEliminar').modal('show');
+
+		}
+	</script>
 
 
 

@@ -8,30 +8,34 @@ public class ServicioDTO {
     private Integer dniCliente;
     private String nomCliente;
     private Integer telefonoCliente;
-    private Integer idEquipoServicio;
+    private Integer idDetalle;
     private String marca;
     private String modelo;
     private LocalDate fechaIngreso;
     private String reporCliente;
     private String estadoServicio;
+    private Integer idEquipo;
     
     
     
 
+
 	
-	public ServicioDTO(Integer dniCliente, String nomCliente, Integer telefonoCliente, Integer idEquipoServicio,
-			String marca, String modelo, LocalDate fechaIngreso, String reporCliente, String estadoServicio) {
+	public ServicioDTO(Integer dniCliente, String nomCliente, Integer telefonoCliente, Integer idDetalle, String marca,
+			String modelo, LocalDate fechaIngreso, String reporCliente, String estadoServicio, Integer idEquipo) {
 		super();
 		this.dniCliente = dniCliente;
 		this.nomCliente = nomCliente;
 		this.telefonoCliente = telefonoCliente;
-		this.idEquipoServicio = idEquipoServicio;
+		this.idDetalle = idDetalle;
 		this.marca = marca;
 		this.modelo = modelo;
 		this.fechaIngreso = fechaIngreso;
 		this.reporCliente = reporCliente;
 		this.estadoServicio = estadoServicio;
+		this.idEquipo = idEquipo;
 	}
+	
 	public Integer getDniCliente() {
 		return dniCliente;
 	}
@@ -80,11 +84,19 @@ public class ServicioDTO {
 	public void setEstadoServicio(String estadoServicio) {
 		this.estadoServicio = estadoServicio;
 	}
-	public Integer getIdEquipoServicio() {
-		return idEquipoServicio;
+	public Integer getIdDetalle() {
+		return idDetalle;
 	}
-	public void setIdEquipoServicio(Integer idEquipoServicio) {
-		this.idEquipoServicio = idEquipoServicio;
+	public void setIdDetalle(Integer idDetalle) {
+		this.idDetalle = idDetalle;
+	}
+
+	public Integer getIdEquipo() {
+		return idEquipo;
+	}
+
+	public void setIdEquipo(Integer idEquipo) {
+		this.idEquipo = idEquipo;
 	}
     
     

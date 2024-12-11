@@ -1,5 +1,6 @@
 package ejb;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import dto.ServicioDTO;
@@ -8,6 +9,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 import web_grupo3jpa.DetalleServicio;
 import web_grupo3jpa.EquipoServicio;
 import web_grupo3jpa.ImagenesServicio;
@@ -29,12 +31,13 @@ public class EjbGestionServicio {
                 + "c.dniCliente, "
                 + "c.nomCliente, "
                 + "c.telefonoCliente, "
-                + "e.idEquipo, "
+                + "d.idDetalle, "
                 + "e.marca, "
                 + "e.modelo, "
                 + "d.fechaIngreso, "
                 + "d.reporCliente, "
-                + "d.estadoServicio "
+                + "d.estadoServicio, "
+                + "e.idEquipo "
                 + "FROM Cliente c "
                 + "JOIN c.equipoServicios  e "
                 + "JOIN e.detalleServicios d";
@@ -45,7 +48,7 @@ public class EjbGestionServicio {
         }
     
     public ServicioDTO obtenerInformacionServicioPorId(int idEquipo) {
-        String jpql = "SELECT c.dniCliente, c.nomCliente, c.telefonoCliente, e.marca, e.modelo, d.fechaIngreso, d.reporCliente, d.estadoServicio "
+        String jpql = "SELECT c.dniCliente, c.nomCliente, c.telefonoCliente,d.idDetalle, e.marca, e.modelo, d.fechaIngreso, d.reporCliente, d.estadoServicio,e.idEquipo "
         		+ "FROM Cliente c "
         		+ "JOIN c.equipoServicios e "
         		+ "JOIN e.detalleServicios d "
@@ -70,6 +73,52 @@ public class EjbGestionServicio {
             imagen.setEquipoServicio(equipo);
             System.out.println("agregando imagen : "+ imagen.getRutaImagen());
             em.persist(imagen);
+        }
+    }
+    
+    
+    public void actualizarEstado(Integer idDetalle, String informeFinal, BigDecimal precio) {
+
+        DetalleServicio detalleServicio = em.find(DetalleServicio.class, idDetalle);
+        
+        if (detalleServicio != null) {
+            detalleServicio.setInfFinal(informeFinal);
+            detalleServicio.setPrecio(precio);
+            detalleServicio.setEstadoServicio("en revision");
+
+            em.merge(detalleServicio);
+        }
+    }
+    
+    public void finalizarEstadoReparacion(Integer idDetalle) {
+
+        DetalleServicio detalleServicio = em.find(DetalleServicio.class, idDetalle);
+        
+        if (detalleServicio != null) {
+            detalleServicio.setEstadoServicio("finalizado");
+            em.merge(detalleServicio);
+        }
+    }
+    
+    
+    
+    @Transactional
+    public void eliminarServicioTecnico(int idEquipo) {
+
+        EquipoServicio equipoServicio = em.find(EquipoServicio.class, idEquipo);
+        
+        if (equipoServicio != null) {
+
+            for (ImagenesServicio imagen : equipoServicio.getImagenesServicios()) {
+                em.remove(imagen);
+            }
+            
+
+            for (DetalleServicio detalle : equipoServicio.getDetalleServicios()) {
+                em.remove(detalle);
+            }
+            
+            em.remove(equipoServicio);
         }
     }
 

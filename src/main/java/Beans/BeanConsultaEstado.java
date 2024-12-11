@@ -9,6 +9,7 @@ import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -23,6 +24,7 @@ public class BeanConsultaEstado implements Serializable {
 
 	private int idEquipo;
 	private ServicioDTO resultados;
+	
 	@Inject
 	private EjbGestionServicio ejb;
 	
@@ -32,7 +34,15 @@ public class BeanConsultaEstado implements Serializable {
     
     public void buscarEquipoServicio() {
     	System.out.println(idEquipo);
-    	setResultados(ejb.obtenerInformacionServicioPorId(idEquipo));
+    	
+    	try {
+			setResultados(ejb.obtenerInformacionServicioPorId(idEquipo));
+		} catch (Exception e) {
+			System.out.println("No se encontró información para el ID: ");		
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al consultar", "No se encontró información para el ID proporcionado.");
+            FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+			}
+    	
     	
         if (resultados != null) {
         	System.out.println("Datos encontrados: " + resultados);
@@ -49,6 +59,8 @@ public class BeanConsultaEstado implements Serializable {
     
 	public String irPaginaConsulta() {
 		System.out.println("se llamo a cambio de pagina");
+		this.idEquipo = 0;
+        this.resultados = null;
 		return "consultar_estado";
 	}
     

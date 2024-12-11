@@ -1,5 +1,6 @@
 package Beans;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -18,6 +19,8 @@ import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.model.SelectItem;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -56,6 +59,7 @@ public class BeanServicio implements Serializable {
     
     
  // Variables para fecha
+    private Integer idDetalle;
     private String fechaIngreso;
     private String marca;
     private String modelo;
@@ -67,65 +71,15 @@ public class BeanServicio implements Serializable {
     private String tarjetaVideo;
     private String reporteCliente;
     private String informeInicial;
+    private String informeFinal;
     private String foto;
     private String fuente;
     private String bateria;
     private String otros;
     private String cargador;
     private BigDecimal precio;
-
+    private Integer idEquipo;
    
-    
-    public String getFechaIngreso() {
-		return fechaIngreso;
-	}
-
-
-	public void setFechaIngreso(String fechaIngreso) {
-		this.fechaIngreso = fechaIngreso;
-	}
-
-
-	public String getFuente() {
-		return fuente;
-	}
-
-
-	public void setFuente(String fuente) {
-		this.fuente = fuente;
-	}
-
-
-	public String getBateria() {
-		return bateria;
-	}
-
-
-	public void setBateria(String bateria) {
-		this.bateria = bateria;
-	}
-
-
-	public String getOtros() {
-		return otros;
-	}
-
-
-	public void setOtros(String otros) {
-		this.otros = otros;
-	}
-
-
-	public String getCargador() {
-		return cargador;
-	}
-
-
-	public void setCargador(String cargador) {
-		this.cargador = cargador;
-	}
-
-
 	@PostConstruct
     public void init() {
     	itemUsuario = new ArrayList();
@@ -192,9 +146,88 @@ public class BeanServicio implements Serializable {
         imagenes.add(imagen);
         ejb.crearServicio(detalle, equipo, imagenes);
 		System.out.println(toString());
+		recargarPagina("/dash_servicio.xhtml");
 	}
     
+	public void actualizarEstado() {
+		System.out.println(idDetalle);
+		System.out.println(informeFinal);
+		System.out.println(precio);
+		
+		ejb.actualizarEstado(idDetalle, informeFinal, precio);
+		recargarPagina("/dash_terminar_servicio.xhtml");
+	}
+	public void recargarPagina(String url) {
+	    try {
+	        FacesContext facesContext = FacesContext.getCurrentInstance();
+	        ExternalContext externalContext = facesContext.getExternalContext();
+	        externalContext.redirect(externalContext.getRequestContextPath() + url);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
 
+	
+	public void finalizarReparacion() {
+		System.out.println(idDetalle);
+		ejb.finalizarEstadoReparacion(idDetalle);
+		recargarPagina("/dash_terminar_servicio.xhtml");
+	}
+	
+	public void eliminarServicio() {
+		System.out.println(idEquipo);
+		ejb.eliminarServicioTecnico(idEquipo);
+		recargarPagina("/dash_servicio.xhtml");
+	}
+    
+    public String getFechaIngreso() {
+		return fechaIngreso;
+	}
+
+
+	public void setFechaIngreso(String fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
+	}
+
+
+	public String getFuente() {
+		return fuente;
+	}
+
+
+	public void setFuente(String fuente) {
+		this.fuente = fuente;
+	}
+
+
+	public String getBateria() {
+		return bateria;
+	}
+
+
+	public void setBateria(String bateria) {
+		this.bateria = bateria;
+	}
+
+
+	public String getOtros() {
+		return otros;
+	}
+
+
+	public void setOtros(String otros) {
+		this.otros = otros;
+	}
+
+
+	public String getCargador() {
+		return cargador;
+	}
+
+
+	public void setCargador(String cargador) {
+		this.cargador = cargador;
+	}
 
 
     public int getId_usuario() {
@@ -362,6 +395,39 @@ public class BeanServicio implements Serializable {
 	public void setPrecio(BigDecimal precio) {
 		this.precio = precio;
 	}
+
+
+	public String getInformeFinal() {
+		return informeFinal;
+	}
+
+
+	public void setInformeFinal(String informeFinal) {
+		this.informeFinal = informeFinal;
+	}
+
+
+	public Integer getIdDetalle() {
+		return idDetalle;
+	}
+
+
+	public void setIdDetalle(Integer idDetalle) {
+		this.idDetalle = idDetalle;
+	}
+
+
+	public Integer getIdEquipo() {
+		return idEquipo;
+	}
+
+
+	public void setIdEquipo(Integer idEquipo) {
+		this.idEquipo = idEquipo;
+	}
+
+
+
     
     
     

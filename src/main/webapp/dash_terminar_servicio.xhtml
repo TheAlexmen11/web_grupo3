@@ -291,41 +291,62 @@
 
 												<div class="row">
 													<div class="col-md-6 mb-2">
-														<label for="idEquipo" class="col-form-label"> ID:</label>
-														<h:inputText type="text" class="form-control" id="idEquipo"
-															readonly="true" />
-
+														<label for="idDetalle" class="col-form-label"> ID
+															Detalle:</label>
+														<h:inputText type="text" class="form-control"
+															id="idDetalle" readonly="true" />
+														<h:inputHidden id="idEquipoHidden"
+															value="#{beanServicio.idDetalle}" />
 													</div>
 													<div class="col-md-6 mb-2">
-														<label for="usuario" class="col-form-label">Datos Usuario:</label>
+														<label for="usuario" class="col-form-label">Datos
+															Usuario:</label>
 														<h:inputText class="form-control" id="usuario"
-															value="" readonly="true" >
+															readonly="true">
 														</h:inputText>
 													</div>
 												</div>
+												<div class="row">
+													<div class="col-md-12 mb-2">
+														<label for="reporteCliente" class="col-form-label">reporte
+															del cliente:</label>
+														<h:inputText class="form-control" id="reporCliente"
+															value="" readonly="true" />
+													</div>
+													<div class="col-md-12 mb-2">
+														<label for="informeFinal" class="col-form-label">Informe
+															final:</label>
+														<h:inputText class="form-control" id="informeFinal"
+															value="#{beanServicio.informeFinal}" />
+													</div>
+												</div>
+
 
 												<div class="row">
 													<div class="col-md-6 mb-2">
-														<label for="fechaIngreso1" class="col-form-label">F.
-															Ingreso:</label>
-														<h:inputText class="form-control" id="fechaIngreso1"
-															value="" />
-
+														<label for="precio" class="col-form-label">Precio:</label>
+														<h:inputText id="reporteCliente"
+															value="#{beanServicio.precio}" type="number"
+															class="form-control" step="0.01" min="0">
+														</h:inputText>
 													</div>
 													<div class="col-md-6 mb-2">
-														<label for="fechaIngreso12" class="col-form-label">F.
-															Ingreso:</label>
-														<h:inputText class="form-control" id="fechaIngreso12"
-															value="" />
-
+														<label for="informeInicial" class="col-form-label d-block">Actualización
+															de estado:</label>
+														<div
+															class="btn-warning fw-bold btn-icon-split p-2 rounded text-center">
+															en revisión</div>
 													</div>
 												</div>
+
+
+
 												<input type="hidden" id="user_id" name="user_id" value="" />
 												<div class="modal-footer">
 													<button type="button" class="btn btn-secondary"
 														data-bs-dismiss="modal">Cerrar</button>
 													<h:commandButton value="Registrar" class="btn btn-primary"
-														action="#{beanServicio.registrar}">
+														action="#{beanServicio.actualizarEstado}">
 
 
 													</h:commandButton>
@@ -335,6 +356,43 @@
 									</div>
 								</div>
 							</div>
+
+							<!-- Modal para confirmar la finalización de la reparación -->
+							<div class="modal fade" id="modalFinalizar" tabindex="-1"
+								role="dialog" aria-labelledby="modalFinalizarLabel"
+								aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<h:form enctype="multipart/form-data">
+											<div class="modal-header">
+												<h5 class="modal-title" id="modalFinalizarLabel">Confirmar
+													Finalización</h5>
+												<button type="button" class="close" data-bs-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+
+												<h:inputHidden id="idDetalleHidden"
+													value="#{beanServicio.idDetalle}" />
+												<h:outputText
+													value="¿Está seguro de que desea finalizar la reparación?" />
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-bs-dismiss="modal">Cerrar</button>
+												<h:commandButton value="Finalizar Reparación"
+													class="btn btn-primary"
+													action="#{beanServicio.finalizarReparacion}">
+
+												</h:commandButton>
+											</div>
+										</h:form>
+									</div>
+								</div>
+							</div>
+
 
 
 						</div>
@@ -346,6 +404,13 @@
 									border="1" rendered="#{not empty beanServicio.resultados}"
 									class="table table-bordered" id="dataTable" width="100%"
 									cellspacing="0">
+									
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="Id Equipo" />
+										</f:facet>
+										<h:outputText value="#{r.idEquipo}" />
+									</h:column>
 
 
 									<h:column>
@@ -414,14 +479,32 @@
 										<f:facet name="header">
 											<h:outputText value="" />
 										</f:facet>
+										<h:panelGroup layout="block"
+											rendered="#{r.estadoServicio eq 'pendiente'}">
 
-										<button type="button" class="btn btn-info my-2"
-											onclick="editarServicio('#{r.idEquipoServicio}','#{r.nomCliente}','#{r.marca}','#{r.modelo}')">
-											<i class="fa fa-arrow-up" aria-hidden="true"></i>
-										</button>
-										<button type="button" class="btn btn-primary">
-											<i class="fa fa-check" aria-hidden="true"></i>
-										</button>
+											<button type="button" class="btn btn-info my-2"
+												onclick="editarServicio('#{r.idDetalle}','#{r.nomCliente}','#{r.marca}','#{r.modelo}','#{r.reporCliente}')">
+												<i class="fa fa-arrow-up" aria-hidden="true"></i>
+											</button>
+
+										</h:panelGroup>
+
+										<h:panelGroup layout="block"
+											rendered="#{r.estadoServicio eq 'en revision'}">
+
+											<button type="button" class="btn btn-primary"
+												onclick="finalizarServicio('#{r.idDetalle}')">
+												<i class="fa fa-check" aria-hidden="true"></i>
+											</button>
+
+										</h:panelGroup>
+										<h:panelGroup layout="block"
+											rendered="#{r.estadoServicio eq 'finalizado'}">
+
+
+
+										</h:panelGroup>
+
 									</h:column>
 								</h:dataTable>
 
@@ -508,14 +591,23 @@
 
 
 	<script>
-		function editarServicio(id,nom,marca,modelo) {
+		function editarServicio(id, nom, marca, modelo, reportClient) {
 			console.log(id);
-			document.getElementById('j_idt2:idEquipo').value = id;
-			document.getElementById('j_idt2:usuario').value = nom+"  |  "+marca+" "+modelo;
+			document.getElementById('j_idt2:idDetalle').value = id;
+			document.getElementById('j_idt2:idEquipoHidden').value = id;
+
+			document.getElementById('j_idt2:usuario').value = nom + "  |  "
+					+ marca + " " + modelo;
+			document.getElementById('j_idt2:reporCliente').value = reportClient;
+
 			$('#modalActualizarServicio').modal('show');
-			
+
 		}
-		   
+		function finalizarServicio(id) {
+			document.getElementById('j_idt12:idDetalleHidden').value = id;
+			$('#modalFinalizar').modal('show');
+
+		}
 	</script>
 
 
