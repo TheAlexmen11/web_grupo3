@@ -15,14 +15,12 @@ public class ServicioDTO {
     private String reporCliente;
     private String estadoServicio;
     private Integer idEquipo;
-    
-    
+    private LocalDate fechaTermino;
     
 
-
-	
 	public ServicioDTO(Integer dniCliente, String nomCliente, Integer telefonoCliente, Integer idDetalle, String marca,
-			String modelo, LocalDate fechaIngreso, String reporCliente, String estadoServicio, Integer idEquipo) {
+			String modelo, LocalDate fechaIngreso, String reporCliente, String estadoServicio, Integer idEquipo,
+			LocalDate fechaTermino) {
 		super();
 		this.dniCliente = dniCliente;
 		this.nomCliente = nomCliente;
@@ -34,8 +32,8 @@ public class ServicioDTO {
 		this.reporCliente = reporCliente;
 		this.estadoServicio = estadoServicio;
 		this.idEquipo = idEquipo;
+		this.fechaTermino = fechaTermino;
 	}
-	
 	public Integer getDniCliente() {
 		return dniCliente;
 	}
@@ -97,6 +95,12 @@ public class ServicioDTO {
 
 	public void setIdEquipo(Integer idEquipo) {
 		this.idEquipo = idEquipo;
+	}
+	public LocalDate getFechaTermino() {
+		return fechaTermino;
+	}
+	public void setFechaTermino(LocalDate fechaTermino) {
+		this.fechaTermino = fechaTermino;
 	}
     
     

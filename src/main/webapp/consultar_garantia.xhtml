@@ -21,7 +21,7 @@
 <h:body>
 	<div class="container py-5">
 		<div class="text-center mb-4">
-			<h1 class="display-6">Consulta de Garantia</h1>
+			<h1 class="display-6">Consulta de Reparación</h1>
 			<p class="text-muted">Introduce tu ID de reparación para
 				verificar el estado.</p>
 		</div>
@@ -29,20 +29,20 @@
 			<div class="col-md-6">
 				<div class="card shadow-sm">
 					<div class="card-body">
-						<h:form action="informacion_equipo.xhtml" method="get">
+						<h:form >
 							<h:messages id="messages" globalOnly="true"
 								styleClass="alert alert-danger text-center" />
 							<div class="mb-3">
 								<label for="idReparacion" class="form-label">ID de
-									Garantia</label>
+									Reparación</label>
 								<h:inputText type="text" class="form-control" id="idReparacion"
 									name="idReparacion" placeholder="Ingrese su ID"
-									value="#{beanConsultaEstado.idEquipo}" />
+									value="#{beanGarantia.idEquipo}" />
 							</div>
 							<div class="text-center">
 								<h:commandButton value="consultar" type="submit"
 									class="btn btn-primary"
-									action="#{beanConsultaEstado.buscarEquipoServicio}"></h:commandButton>
+									action="#{beanGarantia.buscarEquipoServicio}"></h:commandButton>
 							</div>
 						</h:form>
 					</div>

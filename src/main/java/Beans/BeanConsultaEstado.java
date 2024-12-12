@@ -1,10 +1,12 @@
 package Beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import dto.ServicioDTO;
 import ejb.EjbGestionServicio;
+import jakarta.annotation.PostConstruct;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.enterprise.context.RequestScoped;
@@ -32,6 +34,14 @@ public class BeanConsultaEstado implements Serializable {
         // TODO Auto-generated constructor stub
     }
     
+    @PostConstruct
+    public void init() {
+    	resultados = null;
+    	idEquipo = 0;
+    	
+    }
+    
+    
     public void buscarEquipoServicio() {
     	System.out.println(idEquipo);
     	
@@ -57,11 +67,11 @@ public class BeanConsultaEstado implements Serializable {
         }
     }
     
-	public String irPaginaConsulta() {
+	public String irPaginaGarantia() {
 		System.out.println("se llamo a cambio de pagina");
 		this.idEquipo = 0;
         this.resultados = null;
-		return "consultar_estado";
+		return "consultar_garantia";
 	}
     
     

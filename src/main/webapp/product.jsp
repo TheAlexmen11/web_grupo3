@@ -27,11 +27,14 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                         <li class="nav-item"><a class="nav-link" href="index.jsp">Inicio</a></li>
-                            <li class="nav-item"><a class="nav-link" href="about.jsp">Nosotros</a></li>
-                            <li class="nav-item"><a class="nav-link" href="contact.jsp">Contacto</a></li>
+                         <li class="nav-item"><a class="nav-link" href="index.xhtml">Inicio</a></li>
+                            <li class="nav-item"><a class="nav-link" href="about.xhtml">Nosotros</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contact.xhtml">Contacto</a></li>
                             <li class="nav-item"><a class="nav-link" href="product.jsp">Productos</a></li>
                             <li class="nav-item"><a class="nav-link btn btn-outline-success mx-2" href="login.jsp">Login</a></li>
+ <li class="nav-item"><a class="nav-link btn btn-outline-success mx-2" href="consultar_estado.xhtml">Consultar Estado Reparacion</a></li> 
+                            <li class="nav-item"><a class="nav-link btn btn-outline-success mx-2" href="consultar_garantia.xhtml">Consultar Garantia</a></li> 
+                            
                     </ul>
                 </div>
             </div>

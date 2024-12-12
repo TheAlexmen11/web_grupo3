@@ -1,6 +1,7 @@
 package ejb;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import dto.ServicioDTO;
@@ -37,7 +38,8 @@ public class EjbGestionServicio {
                 + "d.fechaIngreso, "
                 + "d.reporCliente, "
                 + "d.estadoServicio, "
-                + "e.idEquipo "
+                + "e.idEquipo, "
+                + "d.fechaIngreso "
                 + "FROM Cliente c "
                 + "JOIN c.equipoServicios  e "
                 + "JOIN e.detalleServicios d";
@@ -48,7 +50,7 @@ public class EjbGestionServicio {
         }
     
     public ServicioDTO obtenerInformacionServicioPorId(int idEquipo) {
-        String jpql = "SELECT c.dniCliente, c.nomCliente, c.telefonoCliente,d.idDetalle, e.marca, e.modelo, d.fechaIngreso, d.reporCliente, d.estadoServicio,e.idEquipo "
+        String jpql = "SELECT c.dniCliente, c.nomCliente, c.telefonoCliente,d.idDetalle, e.marca, e.modelo, d.fechaIngreso, d.reporCliente, d.estadoServicio,e.idEquipo, d.fechaIngreso "
         		+ "FROM Cliente c "
         		+ "JOIN c.equipoServicios e "
         		+ "JOIN e.detalleServicios d "
@@ -95,6 +97,8 @@ public class EjbGestionServicio {
         DetalleServicio detalleServicio = em.find(DetalleServicio.class, idDetalle);
         
         if (detalleServicio != null) {
+        	LocalDate fechaTermino = LocalDate.now(); 
+            detalleServicio.setFechaTermino(fechaTermino);
             detalleServicio.setEstadoServicio("finalizado");
             em.merge(detalleServicio);
         }

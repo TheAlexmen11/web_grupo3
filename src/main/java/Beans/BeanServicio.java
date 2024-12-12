@@ -170,7 +170,9 @@ public class BeanServicio implements Serializable {
 	
 	public void finalizarReparacion() {
 		System.out.println(idDetalle);
+		
 		ejb.finalizarEstadoReparacion(idDetalle);
+		
 		recargarPagina("/dash_terminar_servicio.xhtml");
 	}
 	

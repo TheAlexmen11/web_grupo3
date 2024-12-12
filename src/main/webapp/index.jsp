@@ -40,6 +40,8 @@
                             <li class="nav-item"><a class="nav-link" href="product.jsp">Productos</a></li>
                             <li class="nav-item"><a class="nav-link btn btn-outline-success mx-2" href="login.jsp">Login</a></li>                     
                             <li class="nav-item"><a class="nav-link btn btn-outline-success mx-2" href="consultar_estado.xhtml">Consultar Estado Reparacion</a></li> 
+                            <li class="nav-item"><a class="nav-link btn btn-outline-success mx-2" href="consultar_garantia.xhtml">Consultar Garantia</a></li> 
+                            
                         </ul>
                     </div>
                 </div>
