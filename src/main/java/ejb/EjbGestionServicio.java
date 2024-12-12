@@ -11,11 +11,16 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
 import web_grupo3jpa.DetalleServicio;
 import web_grupo3jpa.EquipoServicio;
 import web_grupo3jpa.ImagenesServicio;
 
-
+@Path("gestionServicio")
 @Stateless
 @LocalBean
 public class EjbGestionServicio {
@@ -27,6 +32,10 @@ public class EjbGestionServicio {
         // TODO Auto-generated constructor stub
     }
     
+    
+	@GET
+    @Path("obtenerServicio")
+    @Produces(MediaType.APPLICATION_JSON)
     public List<ServicioDTO> obtenerInformacionServicio() {
         String jpql = "SELECT "
                 + "c.dniCliente, "
@@ -49,7 +58,12 @@ public class EjbGestionServicio {
         
         }
     
-    public ServicioDTO obtenerInformacionServicioPorId(int idEquipo) {
+	
+	
+	@GET
+    @Path("obtenerServicioPorId")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ServicioDTO obtenerInformacionServicioPorId(@QueryParam(value = "idEquipo") int idEquipo) {
         String jpql = "SELECT c.dniCliente, c.nomCliente, c.telefonoCliente,d.idDetalle, e.marca, e.modelo, d.fechaIngreso, d.reporCliente, d.estadoServicio,e.idEquipo, d.fechaIngreso "
         		+ "FROM Cliente c "
         		+ "JOIN c.equipoServicios e "
@@ -92,7 +106,11 @@ public class EjbGestionServicio {
         }
     }
     
-    public void finalizarEstadoReparacion(Integer idDetalle) {
+    
+	@GET
+    @Path("finalizarEstadoReparacion")
+    @Produces(MediaType.APPLICATION_JSON) 	
+    public void finalizarEstadoReparacion(@QueryParam(value = "idDetalle") Integer idDetalle) {
 
         DetalleServicio detalleServicio = em.find(DetalleServicio.class, idDetalle);
         
